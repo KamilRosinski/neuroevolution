@@ -68,7 +68,7 @@ public class SnakeModel {
 	}
 
 	private void updateEmptyField(final Point2D field, final boolean isEmpty) {
-		emptyFields[field.getY()][foodField.getX()] = isEmpty;
+		emptyFields[field.getY()][field.getX()] = isEmpty;
 	}
 
 	public int getWidth() {

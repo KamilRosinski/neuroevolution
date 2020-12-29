@@ -1,4 +1,4 @@
-package neuroevolution.game;
+package neuroevolution.snake;
 
 import java.util.Objects;
 
@@ -22,6 +22,10 @@ public class Point2D {
 
 	public Point2D add(final Point2D other) {
 		return new Point2D(x + other.x, y + other.y);
+	}
+
+	public int chessDistance(final Point2D other) {
+		return Math.max(Math.abs(x - other.x), Math.abs(y - other.y));
 	}
 
 	@Override

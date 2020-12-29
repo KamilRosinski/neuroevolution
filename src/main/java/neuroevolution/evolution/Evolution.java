@@ -1,8 +1,8 @@
 package neuroevolution.evolution;
 
 import neuroevolution.ann.NeuralNetwork;
-import neuroevolution.game.Game;
-import neuroevolution.game.PlayerState;
+import neuroevolution.snake.Snake;
+import neuroevolution.snake.PlayerState;
 import neuroevolution.math.ActivationFunction;
 import neuroevolution.random.RandomUtils;
 
@@ -55,12 +55,12 @@ public class Evolution {
 
 	private int evaluateOrganism(final Organism organism) {
 		final NeuralNetwork brain = organism.buildNeuralNetwork();
-		final Game game = new Game(6, 6, 100);
-		final GameAdapter gameAdapter = new GameAdapter(game);
-		while (game.getPlayerState() == PlayerState.ALIVE) {
-			gameAdapter.move(brain);
+		final Snake snake = new Snake(6, 6, 100);
+		final SnakeAdapter snakeAdapter = new SnakeAdapter(snake);
+		while (snake.getPlayerState() == PlayerState.ALIVE) {
+			snakeAdapter.move(brain);
 		}
-		return game.getScore();
+		return snake.getScore();
 	}
 
 	private Organism createRandomOrganism() {

@@ -1,4 +1,4 @@
-package neuroevolution.game;
+package neuroevolution.snake;
 
 import neuroevolution.random.RandomUtils;
 import org.assertj.core.api.Assertions;
@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class GameTest {
+public class SnakeTest {
 
 	@ParameterizedTest
 	@MethodSource("provideValuesForMove")
@@ -21,16 +21,16 @@ public class GameTest {
 		try (final MockedStatic<RandomUtils> randomUtilsMock = Mockito.mockStatic(RandomUtils.class)) {
 			// given
 			randomUtilsMock.when(() -> RandomUtils.pick(Mockito.anyList())).thenReturn(new Point2D(1, 2), new Point2D(2, 1), new Point2D(2, 2));
-			final Game game = new Game(4, 3, 3);
+			final Snake snake = new Snake(4, 3, 3);
 
 			// when
-			moves.forEach(game::move);
+			moves.forEach(snake::move);
 
 			// then
-			Assertions.assertThat(game.getPlayerField()).isEqualTo(expectedPlayerField);
-			Assertions.assertThat(game.getScore()).isEqualTo(expectedScore);
-			Assertions.assertThat(game.getPlayerState()).isEqualTo(expectedPlayerState);
-			randomUtilsMock.verify(Mockito.times(game.getScore() + 1), () -> RandomUtils.pick(Mockito.anyList()));
+			Assertions.assertThat(snake.getHeadField()).isEqualTo(expectedPlayerField);
+			Assertions.assertThat(snake.getScore()).isEqualTo(expectedScore);
+			Assertions.assertThat(snake.getPlayerState()).isEqualTo(expectedPlayerState);
+			randomUtilsMock.verify(Mockito.times(snake.getScore() + 1), () -> RandomUtils.pick(Mockito.anyList()));
 
 		}
 	}
@@ -52,17 +52,17 @@ public class GameTest {
 		try (final MockedStatic<RandomUtils> randomUtilsMock = Mockito.mockStatic(RandomUtils.class)) {
 			// given
 			randomUtilsMock.when(() -> RandomUtils.pick(Mockito.anyList())).thenReturn(new Point2D(0, 0));
-			final Game game = new Game(4, 3, 2);
+			final Snake snake = new Snake(4, 3, 2);
 
 			// when
-			final GameException result = Assertions.catchThrowableOfType(() -> moves.forEach(game::move), GameException.class);
+			final SnakeException result = Assertions.catchThrowableOfType(() -> moves.forEach(snake::move), SnakeException.class);
 
 			// then
 			Assertions.assertThat(result).isNotNull();
 			Assertions.assertThat(result.getMessage()).isEqualTo("Cannot move. Player is no longer alive.");
-			Assertions.assertThat(game.getScore()).isEqualTo(0);
-			Assertions.assertThat(game.getPlayerField()).isEqualTo(expectedPlayerField);
-			Assertions.assertThat(game.getPlayerState()).isEqualTo(expectedPlayerState);
+			Assertions.assertThat(snake.getScore()).isEqualTo(0);
+			Assertions.assertThat(snake.getHeadField()).isEqualTo(expectedPlayerField);
+			Assertions.assertThat(snake.getPlayerState()).isEqualTo(expectedPlayerState);
 			randomUtilsMock.verify(() -> RandomUtils.pick(Mockito.anyList()));
 		}
 	}

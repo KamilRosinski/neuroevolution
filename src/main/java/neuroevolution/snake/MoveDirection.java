@@ -1,4 +1,4 @@
-package neuroevolution.game;
+package neuroevolution.snake;
 
 public enum MoveDirection {
 

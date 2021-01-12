@@ -2,7 +2,11 @@ package neuroevolution.snake;
 
 import neuroevolution.random.RandomUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Snake {
 
@@ -51,7 +55,7 @@ public class Snake {
 
 	public void move(final MoveDirection moveDirection) {
 		if (playerState != PlayerState.ALIVE) {
-			throw new SnakeException("Cannot move. Player is no longer alive.");
+			throw new SnakeException("Cannot move. Snake is no longer alive.");
 		}
 
 		if (headDirection.getTranslation().chessDistance(moveDirection.getTranslation()) == 1) {
@@ -89,7 +93,7 @@ public class Snake {
 
 	private boolean detectTailCollision(final Point2D newHeadField) {
 		final int collisionIndex = Arrays.asList(model.getSnakeFields()).indexOf(newHeadField);
-		return collisionIndex >= 0 && collisionIndex <= model.getSnakeLength() - 1;
+		return collisionIndex >= 0 && collisionIndex < model.getSnakeLength() - 1;
 
 	}
 
@@ -98,8 +102,23 @@ public class Snake {
 	}
 
 	private void updateFoodField() {
-		final Point2D newFoodField = RandomUtils.pick(Arrays.asList(model.getEmptyFields()));
-		model.setFoodField(newFoodField);
+		final Set<Point2D> snakeFields = Arrays.stream(model.getSnakeFields()).collect(Collectors.toSet());
+
+		final List<Point2D> availableFields = new ArrayList<>();
+		for (int row = 0; row < model.getHeight(); ++row) {
+			for (int column = 0; column < model.getWidth(); ++column) {
+				final Point2D field = new Point2D(column, row);
+				if (!snakeFields.contains(field)) {
+					availableFields.add(field);
+				}
+			}
+		}
+
+		if (availableFields.isEmpty()) {
+			System.out.println(Arrays.toString(model.getSnakeFields()));
+		}
+
+		model.setFoodField(availableFields.isEmpty() ? null : RandomUtils.pick(availableFields));
 	}
 
 }

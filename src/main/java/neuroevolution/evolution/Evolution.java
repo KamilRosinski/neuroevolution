@@ -13,11 +13,11 @@ import java.util.Map;
 public class Evolution {
 
 	private final List<Generation> generations = new ArrayList<>();
-	private final int generationSize = 250;
+	private final int generationSize = 200;
 	private final float mutationProbability = 0.05f;
 	private final float mutationRate = 2;
-	private final int inputSize = 2;
-	private final int[] hiddenLayerSizes = {5};
+	private final int inputSize = 8;
+	private final int[] hiddenLayerSizes = {6};
 	private final int outputSize = 4;
 	private final int numberOfParents = 2;
 	private final ActivationFunction activationFunction = ActivationFunction.RELU;
@@ -55,7 +55,7 @@ public class Evolution {
 
 	private int evaluateOrganism(final Organism organism) {
 		final NeuralNetwork brain = organism.buildNeuralNetwork();
-		final Snake snake = new Snake(6, 6, 100);
+		final Snake snake = new Snake(6, 6, 50);
 		final SnakeAdapter snakeAdapter = new SnakeAdapter(snake);
 		while (snake.getPlayerState() == PlayerState.ALIVE) {
 			snakeAdapter.move(brain);

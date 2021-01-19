@@ -1,2 +1,6 @@
-<button (click)="test()">test</button>
-<p *ngIf="text">{{text}}</p>
+<div>
+  <button (click)="start()" [disabled]="jobId">start</button>
+  <button (click)="stop()" [disabled]="!jobId">stop</button>
+  <p *ngIf="jobId">jobId: {{jobId}}</p>
+</div>
+

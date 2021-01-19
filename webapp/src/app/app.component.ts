@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {NeuroevolutionService} from './services/neuroevolution.service';
+import {Component} from '@angular/core';
+import {RandomService} from './services/random.service';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +8,20 @@ import {NeuroevolutionService} from './services/neuroevolution.service';
 })
 export class AppComponent {
 
-  text: string = '';
+  jobId: string = '';
 
-  constructor(private readonly neuroevolutionService: NeuroevolutionService) {
+  constructor(private readonly randomService: RandomService) {
   }
 
-  test(): void {
-    this.neuroevolutionService.test().subscribe((response: string) => {
-      this.text = response;
+  start(): void {
+    this.randomService.startGenerator(1024).subscribe((response: { jobId: string }) => {
+      this.jobId = response.jobId;
+    });
+  }
+
+  stop(): void {
+    this.randomService.stopGenerator(this.jobId).subscribe(() => {
+      this.jobId = '';
     });
   }
 

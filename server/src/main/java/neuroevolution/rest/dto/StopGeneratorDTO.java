@@ -1,4 +1,4 @@
-package neuroevolution.rest;
+package neuroevolution.rest.dto;
 
 import lombok.Getter;
 import lombok.Setter;

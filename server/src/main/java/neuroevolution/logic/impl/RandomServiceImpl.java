@@ -1,7 +1,7 @@
-package neuroevolution.rest.impl;
+package neuroevolution.logic.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import neuroevolution.rest.RandomService;
+import neuroevolution.logic.RandomService;
 import org.springframework.stereotype.Service;
 
 @Slf4j

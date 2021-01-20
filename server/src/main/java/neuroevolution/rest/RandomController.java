@@ -2,6 +2,9 @@ package neuroevolution.rest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import neuroevolution.rest.dto.GeneratorStartedDTO;
+import neuroevolution.rest.dto.StartGeneratorDTO;
+import neuroevolution.rest.dto.StopGeneratorDTO;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;

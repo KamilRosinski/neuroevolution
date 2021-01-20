@@ -1,4 +1,4 @@
-package neuroevolution.rest;
+package neuroevolution.logic;
 
 public interface RandomService {
 

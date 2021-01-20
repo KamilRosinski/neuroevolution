@@ -1,7 +1,8 @@
-package neuroevolution.rest;
+package neuroevolution.job;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import neuroevolution.logic.RandomService;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

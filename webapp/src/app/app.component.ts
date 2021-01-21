@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {RandomService} from './services/random.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,21 +9,14 @@ import {RandomService} from './services/random.service';
 })
 export class AppComponent {
 
-  jobId: string = '';
+  readonly message$: Observable<any>;
 
   constructor(private readonly randomService: RandomService) {
+    this.message$ = randomService.receive();
   }
 
-  start(): void {
-    this.randomService.startGenerator(1024).subscribe((response: { jobId: string }) => {
-      this.jobId = response.jobId;
-    });
+  test(): void {
+    console.log('send');
+    this.randomService.send();
   }
-
-  stop(): void {
-    this.randomService.stopGenerator(this.jobId).subscribe(() => {
-      this.jobId = '';
-    });
-  }
-
 }

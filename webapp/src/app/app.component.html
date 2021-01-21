@@ -1,6 +1,4 @@
 <div>
-  <button (click)="start()" [disabled]="jobId">start</button>
-  <button (click)="stop()" [disabled]="!jobId">stop</button>
-  <p *ngIf="jobId">jobId: {{jobId}}</p>
+  <button (click)="test()">test</button>
+  <p>{{message$ | async | json}}</p>
 </div>
-

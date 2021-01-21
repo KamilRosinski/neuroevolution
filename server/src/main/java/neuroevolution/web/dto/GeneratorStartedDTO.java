@@ -1,4 +1,4 @@
-package neuroevolution.rest.dto;
+package neuroevolution.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

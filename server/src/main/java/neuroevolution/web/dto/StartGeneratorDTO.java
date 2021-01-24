@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class StartGeneratorDTO {
 
-	private long range;
+	public long range;
 
 }

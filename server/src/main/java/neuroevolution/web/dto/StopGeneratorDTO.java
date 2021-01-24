@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class StopGeneratorDTO {
 
-	private String jobId;
+	public String jobId;
 
 }

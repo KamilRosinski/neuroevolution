@@ -26,7 +26,7 @@ public class SchedulingServiceImpl implements SchedulingService {
 	private final Scheduler scheduler;
 
 	@Override
-	public String scheduleRandomJob(final long range, final String sessionId) throws SchedulerException {
+	public void scheduleRandomJob(final long range, final String sessionId) throws SchedulerException {
 		final JobDetail jobDetail = JobBuilder.newJob()
 				.ofType(RandomJob.class)
 				.withIdentity(UUID.randomUUID().toString(), "random")
@@ -40,8 +40,6 @@ public class SchedulingServiceImpl implements SchedulingService {
 
 		scheduler.scheduleJob(jobDetail, trigger);
 		log.info("scheduled job: " + jobDetail.getKey());
-
-		return jobDetail.getKey().getName();
 
 	}
 

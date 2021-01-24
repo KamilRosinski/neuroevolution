@@ -1,4 +1,6 @@
 <div>
-  <button (click)="test()">test</button>
-  <p>{{message$ | async | json}}</p>
+  <button (click)="start()" [disabled]="jobId">start</button>
+  <button (click)="stop()" [disabled]="!jobId">stop</button>
+  <p *ngIf="jobId">jobId: {{jobId}}</p>
+  <p *ngFor="let value of values">{{value | json}}</p>
 </div>

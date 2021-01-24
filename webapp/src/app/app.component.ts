@@ -45,7 +45,7 @@ export class AppComponent {
         jobId: this.jobId
       }
     });
-    this.jobId = null;
+    this.jobId = '';
   }
 
 }

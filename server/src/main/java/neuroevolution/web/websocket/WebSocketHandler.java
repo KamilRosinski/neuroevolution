@@ -1,13 +1,12 @@
 package neuroevolution.web.websocket;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import neuroevolution.logic.SchedulingService;
 import neuroevolution.web.dto.ActionType;
+import neuroevolution.web.dto.MessageDTO;
+import neuroevolution.web.dto.MessageUtils;
 import neuroevolution.web.dto.StartGeneratorDTO;
-import neuroevolution.web.dto.StopGeneratorDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -25,22 +24,16 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 	private final SchedulingService schedulingService;
+	private final MessageUtils messageUtils;
 
 	@Override
-	protected void handleTextMessage(final WebSocketSession session, final TextMessage message) throws Exception {
-		log.info("received: " + message.getPayload());
+	protected void handleTextMessage(final WebSocketSession session, final TextMessage textMessage) throws Exception {
+		final String message = textMessage.getPayload();
+		log.info("session: " + session.getId() + ", received: " + message);
 
-		final ObjectMapper objectMapper = new ObjectMapper();
-		final JsonNode tree = objectMapper.readTree(message.getPayload());
-		switch (ActionType.valueOf(tree.get("action").asText())) {
-			case START_GENERATOR -> {
-				final StartGeneratorDTO request = objectMapper.treeToValue(tree.get("body"), StartGeneratorDTO.class);
-				schedulingService.scheduleRandomJob(request.range, session.getId());
-			}
-			case STOP_GENERATOR -> {
-				final StopGeneratorDTO request = objectMapper.treeToValue(tree.get("body"), StopGeneratorDTO.class);
-				schedulingService.interruptRandomJob(request.jobId);
-			}
+		if (messageUtils.parseMessageAction(message) == ActionType.START_GENERATOR) {
+			final StartGeneratorDTO request = messageUtils.parseMessageBody(message, StartGeneratorDTO.class);
+			schedulingService.scheduleRandomJob(request.range, session.getId());
 		}
 	}
 
@@ -56,8 +49,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		sessions.remove(session.getId());
 	}
 
-	public void sendMessageToSession(final String sessionId, final Object message) throws IOException {
-		sessions.get(sessionId).sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(message)));
+	public void sendMessageToSession(final String sessionId, final MessageDTO message) throws IOException {
+		sessions.get(sessionId).sendMessage(new TextMessage(messageUtils.stringifyMessage(message)));
+	}
+
+	public boolean isSessionActive(final String sessionId) {
+		final WebSocketSession session = sessions.get(sessionId);
+		return session != null && session.isOpen();
 	}
 
 }

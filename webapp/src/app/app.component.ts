@@ -4,6 +4,7 @@ import {ValueGenerated} from './model/value-generated';
 import {Message} from './model/message';
 import {ActionType} from './model/action-type';
 import {GeneratorStarted} from './model/generator-started';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,14 @@ export class AppComponent {
   values: ValueGenerated[] = [];
   jobId: string = '';
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private readonly randomService: RandomService) {
-    randomService.receive().subscribe((message: Message) => {
+  }
+
+  start(): void {
+    this.values = [];
+    this.subscription.add(this.randomService.receive().subscribe((message: Message) => {
       switch (message.action) {
         case ActionType.GENERATOR_STARTED:
           this.jobId = (message.body as GeneratorStarted).jobId;
@@ -25,11 +32,7 @@ export class AppComponent {
           this.values.push(message.body as ValueGenerated);
           break;
       }
-    });
-  }
-
-  start(): void {
-    this.values = [];
+    }));
     this.randomService.send({
       action: ActionType.START_GENERATOR,
       body: {
@@ -39,12 +42,7 @@ export class AppComponent {
   }
 
   stop(): void {
-    this.randomService.send({
-      action: ActionType.STOP_GENERATOR,
-      body: {
-        jobId: this.jobId
-      }
-    });
+    this.subscription.unsubscribe();
     this.jobId = '';
   }
 

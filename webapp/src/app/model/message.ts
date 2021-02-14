@@ -1,10 +1,8 @@
 import {ActionType} from './action-type';
-import {StartGenerator} from './start-generator';
-import {GeneratorStarted} from './generator-started';
-import {ValueGenerated} from './value-generated';
-import {StopGenerator} from './stop-generator';
+import {NewGeneration} from './new-generation';
+import {EvolutionStarted} from './evolution-started';
 
 export interface Message {
   action: ActionType;
-  body: StartGenerator | GeneratorStarted | ValueGenerated | StopGenerator;
+  body: EvolutionStarted | NewGeneration;
 }

@@ -5,17 +5,17 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageDTO {
+public class MessageDTO<T> {
 
 	public ActionType action;
-	public Object body;
+	public T body;
 
-	public static MessageDTO of(final GeneratorStartedDTO dto) {
-		return new MessageDTO(ActionType.GENERATOR_STARTED, dto);
+	public static MessageDTO<NewGenerationDTO> of(final NewGenerationDTO dto) {
+		return new MessageDTO<>(ActionType.NEW_GENERATION, dto);
 	}
 
-	public static MessageDTO of(final ValueGeneratedDTO dto) {
-		return new MessageDTO(ActionType.VALUE_GENERATED, dto);
+	public static MessageDTO<EvolutionStartedDTO> of(final EvolutionStartedDTO dto) {
+		return new MessageDTO<>(ActionType.EVOLUTION_STARTED, dto);
 	}
 
 }

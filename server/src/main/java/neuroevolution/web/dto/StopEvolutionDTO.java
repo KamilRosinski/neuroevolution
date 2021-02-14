@@ -1,13 +1,14 @@
 package neuroevolution.web.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class ValueGeneratedDTO {
+public class StopEvolutionDTO {
 
-	public long id;
-	public long value;
+	public String evolutionId;
 
 }

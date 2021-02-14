@@ -1,7 +1,7 @@
 package neuroevolution.config;
 
 import lombok.AllArgsConstructor;
-import neuroevolution.web.websocket.WebSocketHandler;
+import neuroevolution.web.websocket.EvolutionWebSocketHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -12,11 +12,11 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @AllArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
 
-	private final WebSocketHandler webSocketHandler;
+	private final EvolutionWebSocketHandler evolutionWebSocketHandler;
 
 	@Override
 	public void registerWebSocketHandlers(final WebSocketHandlerRegistry registry) {
-		registry.addHandler(webSocketHandler, "/api/random-generator");
+		registry.addHandler(evolutionWebSocketHandler, "/api/evolution");
 	}
 
 }

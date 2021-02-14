@@ -1,6 +1,8 @@
 <div>
-  <button (click)="start()" [disabled]="jobId">start</button>
-  <button (click)="stop()" [disabled]="!jobId">stop</button>
-  <p *ngIf="jobId">jobId: {{jobId}}</p>
-  <p *ngFor="let value of values">{{value | json}}</p>
+  <button (click)="start()" [disabled]="evolutionId">start</button>
+  <button (click)="stop()" [disabled]="!evolutionId">stop</button>
+  <p>evolution-id: {{evolutionId}}</p>
+  <p>
+    <span *ngFor="let value of values">{{value | json}}</span>
+  </p>
 </div>

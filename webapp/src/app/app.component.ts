@@ -1,10 +1,7 @@
 import {Component} from '@angular/core';
-import {RandomService} from './services/random.service';
-import {ValueGenerated} from './model/value-generated';
-import {Message} from './model/message';
-import {ActionType} from './model/action-type';
-import {GeneratorStarted} from './model/generator-started';
-import {Subscription} from 'rxjs';
+import {EvolutionService} from './services/evolution.service';
+import {NewGeneration} from './model/new-generation';
+import {EvolutionStarted} from './model/evolution-started';
 
 @Component({
   selector: 'app-root',
@@ -13,37 +10,30 @@ import {Subscription} from 'rxjs';
 })
 export class AppComponent {
 
-  values: ValueGenerated[] = [];
-  jobId: string = '';
+  values: NewGeneration[] = [];
+  evolutionId: string = '';
 
-  private subscription: Subscription = new Subscription();
-
-  constructor(private readonly randomService: RandomService) {
+  constructor(private readonly evolutionService: EvolutionService) {
   }
 
   start(): void {
     this.values = [];
-    this.subscription.add(this.randomService.receive().subscribe((message: Message) => {
-      switch (message.action) {
-        case ActionType.GENERATOR_STARTED:
-          this.jobId = (message.body as GeneratorStarted).jobId;
-          break;
-        case ActionType.VALUE_GENERATED:
-          this.values.push(message.body as ValueGenerated);
-          break;
+    this.evolutionService.receiveEvolutionStarted().subscribe(
+      (message: EvolutionStarted) => this.evolutionId = message.evolutionId,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        console.log('completed');
+        this.evolutionId = '';
       }
-    }));
-    this.randomService.send({
-      action: ActionType.START_GENERATOR,
-      body: {
-        range: 1024
-      }
-    });
+    );
+    this.evolutionService.receiveNewGeneration().subscribe((message: NewGeneration) => this.values.push(message));
+    this.evolutionService.sendStartEvolution({range: 1024});
   }
 
   stop(): void {
-    this.subscription.unsubscribe();
-    this.jobId = '';
+    this.evolutionService.sendStopEvolution({evolutionId: this.evolutionId});
   }
 
 }

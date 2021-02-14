@@ -5,8 +5,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class GeneratorStartedDTO {
+public class NewGenerationDTO {
 
-	public String jobId;
+	public long id;
+	public long value;
 
 }

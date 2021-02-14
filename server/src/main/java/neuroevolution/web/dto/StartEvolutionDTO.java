@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StartGeneratorDTO {
+public class StartEvolutionDTO {
 
 	public long range;
 

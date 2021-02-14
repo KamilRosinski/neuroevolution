@@ -20,7 +20,7 @@ public class MessageUtils {
 		return mapper.treeToValue(body, clazz);
 	}
 
-	public String stringifyMessage(final MessageDTO message) throws JsonProcessingException {
+	public String stringifyMessage(final MessageDTO<?> message) throws JsonProcessingException {
 		final ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(message);
 	}

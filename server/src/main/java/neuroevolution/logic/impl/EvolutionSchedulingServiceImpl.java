@@ -4,11 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import neuroevolution.job.EvolutionJob;
 import neuroevolution.logic.EvolutionSchedulingService;
-import neuroevolution.web.dto.NewGenerationDTO;
 import org.quartz.JobBuilder;
-import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -16,9 +13,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.UnableToInterruptJobException;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 @Service
 @Slf4j

@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
-import {NewGeneration} from '../../model/new-generation';
-import {EvolutionService} from '../../services/evolution.service';
-import {EvolutionStarted} from '../../model/evolution-started';
+import {Store} from '@ngrx/store';
+import {EvolutionState, EvolutionStatus} from '../../store/evolution.state';
+import {Observable} from 'rxjs';
+import * as EvolutionSelectors from '../../store/evolution.selectors';
+import * as EvolutionActions from '../../store/evolution.actions';
 
 @Component({
   templateUrl: 'evolution.component.html',
@@ -9,30 +11,26 @@ import {EvolutionStarted} from '../../model/evolution-started';
 })
 export class EvolutionComponent {
 
-  values: NewGeneration[] = [];
-  evolutionId: string = '';
+  readonly evolutionStatus = EvolutionStatus;
 
-  constructor(private readonly evolutionService: EvolutionService) {
+  readonly status$: Observable<EvolutionStatus> = this.store.select(EvolutionSelectors.selectEvolutionStatus);
+  readonly evolutionId$: Observable<string> = this.store.select(EvolutionSelectors.selectEvolutionId);
+  readonly generations$: Observable<{ id: number, score: number }[]> = this.store.select(EvolutionSelectors.selectGenerations);
+
+  constructor(private readonly store: Store<EvolutionState>) {
   }
 
   start(): void {
-    this.values = [];
-    this.evolutionService.receiveEvolutionStarted().subscribe(
-      (message: EvolutionStarted) => this.evolutionId = message.evolutionId,
-      (error) => {
-        console.log('error', error);
-      },
-      () => {
-        console.log('completed');
-        this.evolutionId = '';
-      }
-    );
-    this.evolutionService.receiveNewGeneration().subscribe((message: NewGeneration) => this.values.push(message));
-    this.evolutionService.sendStartEvolution({range: 1024});
+    this.store.dispatch(EvolutionActions.scheduleEvolution({
+      range: 1024
+    }));
   }
 
-  stop(): void {
-    this.evolutionService.sendStopEvolution({evolutionId: this.evolutionId});
+  stop(evolutionId: string): void {
+    this.store.va
+    this.store.dispatch(EvolutionActions.stopEvolution({
+      evolutionId
+    }));
   }
 
 }

@@ -7,6 +7,7 @@ import {EvolutionStarted} from '../model/evolution-started';
 import {StartEvolution} from '../model/start-evolution';
 import {StopEvolution} from '../model/stop-evolution';
 import {filter, map} from 'rxjs/operators';
+import {Message} from '../model/message';
 
 @Injectable({
   providedIn: 'root'
@@ -29,19 +30,22 @@ export class EvolutionService {
     });
   }
 
-  receiveEvolutionStarted(): Observable<EvolutionStarted> {
-    return this.ws.pipe(
-      filter(message => message.action === ActionType.EVOLUTION_STARTED),
-      map(message => message.body)
-    );
-
+  receiveMessage(): Observable<Message> {
+    return this.ws.asObservable();
   }
 
-  receiveNewGeneration(): Observable<NewGeneration> {
-    return this.ws.pipe(
-      filter(message => message.action === ActionType.NEW_GENERATION),
-      map(message => message.body)
-    );
-  }
+  // receiveEvolutionStarted(): Observable<EvolutionStarted> {
+  //   return this.ws.pipe(
+  //     filter(message => message.action === ActionType.EVOLUTION_STARTED),
+  //     map(message => message.body)
+  //   );
+  // }
+
+  // receiveNewGeneration(): Observable<NewGeneration> {
+  //   return this.ws.pipe(
+  //     filter(message => message.action === ActionType.NEW_GENERATION),
+  //     map(message => message.body)
+  //   );
+  // }
 
 }

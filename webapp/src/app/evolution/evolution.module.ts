@@ -3,6 +3,10 @@ import {CommonModule} from '@angular/common';
 
 import {EvolutionRoutingModule} from './evolution-routing.module';
 import {EvolutionComponent} from './components/evolution/evolution.component';
+import {StoreModule} from '@ngrx/store';
+import {evolutionReducer} from './store/evolution.reducers';
+import {EffectsModule} from '@ngrx/effects';
+import {EvolutionEffects} from './store/evolution.effects';
 
 
 @NgModule({
@@ -11,7 +15,9 @@ import {EvolutionComponent} from './components/evolution/evolution.component';
   ],
   imports: [
     CommonModule,
-    EvolutionRoutingModule
+    EvolutionRoutingModule,
+    StoreModule.forFeature('evolution', evolutionReducer),
+    EffectsModule.forFeature([EvolutionEffects])
   ]
 })
 export class EvolutionModule {

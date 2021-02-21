@@ -1,8 +1,14 @@
 <div>
-  <button (click)="start()" [disabled]="evolutionId">start</button>
-  <button (click)="stop()" [disabled]="!evolutionId">stop</button>
-  <p>evolution-id: {{evolutionId}}</p>
-  <p>
-    <span *ngFor="let value of values">{{value | json}}</span>
-  </p>
+  <button (click)="start()">start</button>
+  <div *ngIf="evolutionId$ | async as evolutionId">
+    <button (click)="stop(evolutionId)">stop</button>
+  </div>
+  <p>id: {{evolutionId$ | async}}</p>
+  <p>status: {{status$ | async}}</p>
+  <div>
+    <p>generations:</p>
+    <ul>
+      <li *ngFor="let generation of generations$ | async">id: {{generation.id}}, score: {{generation.score}}</li>
+    </ul>
+  </div>
 </div>

@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {WebSocketSubject} from 'rxjs/internal-compatibility';
-import {Message} from '../model/message';
 import {ActionType} from '../model/action-type';
 import {NewGeneration} from '../model/new-generation';
 import {EvolutionStarted} from '../model/evolution-started';
 import {StartEvolution} from '../model/start-evolution';
 import {StopEvolution} from '../model/stop-evolution';
-import {filter, map, tap} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

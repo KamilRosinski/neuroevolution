@@ -1,8 +1,2 @@
-<div>
-  <button (click)="start()" [disabled]="evolutionId">start</button>
-  <button (click)="stop()" [disabled]="!evolutionId">stop</button>
-  <p>evolution-id: {{evolutionId}}</p>
-  <p>
-    <span *ngFor="let value of values">{{value | json}}</span>
-  </p>
-</div>
+<h1>Neuroevolution</h1>
+<router-outlet></router-outlet>

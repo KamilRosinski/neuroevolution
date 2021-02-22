@@ -1,8 +1,6 @@
 <div>
   <button (click)="start()">start</button>
-  <div *ngIf="evolutionId$ | async as evolutionId">
-    <button (click)="stop(evolutionId)">stop</button>
-  </div>
+  <button (click)="stop()">stop</button>
   <p>id: {{evolutionId$ | async}}</p>
   <p>status: {{status$ | async}}</p>
   <div>

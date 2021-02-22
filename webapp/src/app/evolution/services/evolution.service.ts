@@ -30,22 +30,18 @@ export class EvolutionService {
     });
   }
 
-  receiveMessage(): Observable<Message> {
-    return this.ws.asObservable();
+  receiveEvolutionStarted(): Observable<EvolutionStarted> {
+    return this.ws.pipe(
+      filter((message: Message) => message.action === ActionType.EVOLUTION_STARTED),
+      map((message: Message) => message.body as EvolutionStarted)
+    );
   }
 
-  // receiveEvolutionStarted(): Observable<EvolutionStarted> {
-  //   return this.ws.pipe(
-  //     filter(message => message.action === ActionType.EVOLUTION_STARTED),
-  //     map(message => message.body)
-  //   );
-  // }
-
-  // receiveNewGeneration(): Observable<NewGeneration> {
-  //   return this.ws.pipe(
-  //     filter(message => message.action === ActionType.NEW_GENERATION),
-  //     map(message => message.body)
-  //   );
-  // }
+  receiveNewGeneration(): Observable<NewGeneration> {
+    return this.ws.pipe(
+      filter((message: Message) => message.action === ActionType.NEW_GENERATION),
+      map((message: Message) => message.body as NewGeneration)
+    );
+  }
 
 }

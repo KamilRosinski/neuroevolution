@@ -1,58 +1,56 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EvolutionService} from '../services/evolution.service';
-import * as EvolutionActions from './evolution.actions';
-import {catchError, map, mergeMap, tap} from 'rxjs/operators';
-import {concat, of} from 'rxjs';
-import {Message} from '../model/message';
-import {ActionType} from '../model/action-type';
+import {catchError, map, mergeMap, tap, withLatestFrom} from 'rxjs/operators';
+import {concat, merge, Observable, of} from 'rxjs';
 import {EvolutionStarted} from '../model/evolution-started';
 import {NewGeneration} from '../model/new-generation';
+import {Action, Store} from '@ngrx/store';
+import {EvolutionState} from './evolution.state';
+import * as EvolutionActions from './evolution.actions';
+import * as EvolutionSelectors from './evolution.selectors';
 
 @Injectable()
 export class EvolutionEffects {
 
   readonly scheduleEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.scheduleEvolution),
-    tap((action) => this.evolutionService.sendStartEvolution({
-      range: action.range
-    })),
+    tap(action => this.evolutionService.sendStartEvolution({range: action.range})),
     mergeMap(() => concat(
       of(EvolutionActions.evolutionScheduled()),
-      this.evolutionService.receiveMessage().pipe(
-        map((message: Message) => {
-          switch (message.action) {
-            case ActionType.EVOLUTION_STARTED:
-              return EvolutionActions.evolutionStarted({
-                evolutionId: (message.body as EvolutionStarted).evolutionId
-              });
-            case ActionType.NEW_GENERATION:
-              const body: NewGeneration = message.body as NewGeneration;
-              return EvolutionActions.generationEvaluated({
-                id: body.id,
-                score: body.value
-              });
-            default:
-              throw Error('Unrecognized message');
-          }
-        }),
-        catchError(() => of(EvolutionActions.errorOccurred({message: 'aaa'})))
-      ),
+      this.mapEvolutionMessages(),
       of(EvolutionActions.evolutionStopped())
     ))
   ));
 
   readonly stopEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.stopEvolution),
-    tap((action) => this.evolutionService.sendStopEvolution({
-      evolutionId: action.evolutionId
-    })),
+    withLatestFrom(this.store.select(EvolutionSelectors.selectEvolutionId)),
+    tap(([action, evolutionId]: [Action, string]) => this.evolutionService.sendStopEvolution({evolutionId})),
     map(() => EvolutionActions.stoppingEvolution())
   ));
 
   constructor(private readonly actions$: Actions,
-              private readonly evolutionService: EvolutionService) {
+              private readonly evolutionService: EvolutionService,
+              private readonly store: Store<EvolutionState>) {
   }
 
+  private mapEvolutionMessages(): Observable<Action> {
+    return merge(this.mapEvolutionStartedMessage(), this.mapGenerationEvaluatedMessage()).pipe(
+      catchError(error => of(EvolutionActions.errorOccurred({message: JSON.stringify(error)})))
+    );
+  }
+
+  private mapEvolutionStartedMessage(): Observable<Action> {
+    return this.evolutionService.receiveEvolutionStarted().pipe(
+      map((message: EvolutionStarted) => EvolutionActions.evolutionStarted({evolutionId: message.evolutionId}))
+    );
+  }
+
+  private mapGenerationEvaluatedMessage(): Observable<Action> {
+    return this.evolutionService.receiveNewGeneration().pipe(
+      map((message: NewGeneration) => EvolutionActions.generationEvaluated({id: message.id, score: message.value}))
+    );
+  }
 
 }

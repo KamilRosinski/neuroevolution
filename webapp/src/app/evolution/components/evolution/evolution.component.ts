@@ -26,11 +26,8 @@ export class EvolutionComponent {
     }));
   }
 
-  stop(evolutionId: string): void {
-    this.store.va
-    this.store.dispatch(EvolutionActions.stopEvolution({
-      evolutionId
-    }));
+  stop(): void {
+    this.store.dispatch(EvolutionActions.stopEvolution());
   }
 
 }

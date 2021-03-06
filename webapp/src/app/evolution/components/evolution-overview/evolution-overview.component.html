@@ -1,6 +1,7 @@
 <div>
   <button (click)="start()">start</button>
   <button (click)="stop()">stop</button>
+  <p>range: {{(settings$ | async)?.range}}</p>
   <p>id: {{evolutionId$ | async}}</p>
   <p>status: {{status$ | async}}</p>
   <div>

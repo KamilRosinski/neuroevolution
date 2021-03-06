@@ -1,8 +1,9 @@
-import {createSelector} from '@ngrx/store';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {EvolutionState} from './evolution.state';
 
-export const selectFeature = (state: any) => state.evolution;
+const selectFeature = createFeatureSelector<EvolutionState>('evolution');
 
+export const selectSettings = createSelector(selectFeature, (state: EvolutionState) => state.settings);
 export const selectEvolutionStatus = createSelector(selectFeature, (state: EvolutionState) => state.status);
 export const selectEvolutionId = createSelector(selectFeature, (state: EvolutionState) => state.id);
 export const selectGenerations = createSelector(selectFeature, (state: EvolutionState) => state.generations);

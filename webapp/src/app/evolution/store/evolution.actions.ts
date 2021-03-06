@@ -1,6 +1,8 @@
 import {createAction, props} from '@ngrx/store';
+import {EvolutionSettings} from './evolution.state';
 
-export const scheduleEvolution = createAction('[evolution] Schedule evolution', props<{range: number}>());
+export const createEvolution = createAction('[evolution] Create evolution', props<{settings: EvolutionSettings}>());
+export const scheduleEvolution = createAction('[evolution] Schedule evolution');
 export const evolutionScheduled = createAction('[evolution] Evolution scheduled');
 export const evolutionStarted = createAction('[evolution] Evolution started', props<{evolutionId: string}>());
 export const generationEvaluated = createAction('[evolution] Generation evaluated', props<{id: number, score: number}>());

@@ -1,9 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {EvolutionComponent} from './components/evolution/evolution.component';
+import {EvolutionOverviewComponent} from './components/evolution-overview/evolution-overview.component';
+import {CreateEvolutionComponent} from './components/create-evolution/create-evolution.component';
+import {EvolutionOverviewGuard} from './guards/evolution-overview.guard';
 
 const routes: Routes = [
-  {path: '', component: EvolutionComponent}
+  {
+    path: 'new',
+    component: CreateEvolutionComponent
+  },
+  {
+    path: 'overview',
+    component: EvolutionOverviewComponent,
+    canActivate: [EvolutionOverviewGuard]
+  }
 ];
 
 @NgModule({

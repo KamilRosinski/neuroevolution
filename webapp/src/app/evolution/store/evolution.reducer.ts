@@ -1,10 +1,14 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import {EvolutionState, EvolutionStatus, initialState} from './evolution.state';
+import {EvolutionSettings, EvolutionState, EvolutionStatus, initialState} from './evolution.state';
 import * as EvolutionActions from './evolution.actions';
 
 export function evolutionReducer(s: EvolutionState, action: Action): EvolutionState {
   return createReducer(
     initialState,
+    on(EvolutionActions.createEvolution, (state: EvolutionState, props: {settings: EvolutionSettings}) => ({
+      ...state,
+      settings: props.settings
+    })),
     on(EvolutionActions.evolutionScheduled, (state: EvolutionState) => ({
       ...state,
       status: EvolutionStatus.SCHEDULED

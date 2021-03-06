@@ -27,6 +27,7 @@ import {EffectsModule} from '@ngrx/effects';
     }),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({
+      name: 'Evolution',
       maxAge: 25,
       logOnly: environment.production
     })

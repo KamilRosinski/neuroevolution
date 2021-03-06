@@ -1,0 +1,9 @@
+<p>Create new evolution</p>
+<form [formGroup]="form" (ngSubmit)="createEvolution()">
+  <div>
+    <label for="range-input">Range</label>
+    <input id="range-input" type="number" formControlName="range">
+    <p class="validation-error" *ngIf="(rangeControl.dirty || rangeControl.touched) && rangeControl.errors?.required">This field is required!</p>
+  </div>
+  <button>Create</button>
+</form>

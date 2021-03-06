@@ -1,8 +1,9 @@
 export interface EvolutionState {
-  id: string;
+  id?: string;
+  settings?: EvolutionSettings;
   status: EvolutionStatus;
   generations: {id: number, score: number}[];
-  errorMessage: string;
+  errorMessage?: string;
 }
 
 export enum EvolutionStatus {
@@ -14,9 +15,11 @@ export enum EvolutionStatus {
   ERROR = 'ERROR'
 }
 
+export interface EvolutionSettings {
+  range: number;
+}
+
 export const initialState: EvolutionState = {
-  id: '',
   status: EvolutionStatus.NEW,
   generations: [],
-  errorMessage: ''
 };

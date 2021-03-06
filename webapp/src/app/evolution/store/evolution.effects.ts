@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EvolutionService} from '../services/evolution.service';
-import {catchError, map, mergeMap, tap, withLatestFrom} from 'rxjs/operators';
+import {catchError, filter, map, mergeMap, tap, withLatestFrom} from 'rxjs/operators';
 import {concat, merge, Observable, of} from 'rxjs';
 import {EvolutionStarted} from '../model/evolution-started';
 import {NewGeneration} from '../model/new-generation';
 import {Action, Store} from '@ngrx/store';
-import {EvolutionState} from './evolution.state';
+import {EvolutionSettings, EvolutionState} from './evolution.state';
 import * as EvolutionActions from './evolution.actions';
 import * as EvolutionSelectors from './evolution.selectors';
 
@@ -15,7 +15,12 @@ export class EvolutionEffects {
 
   readonly scheduleEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.scheduleEvolution),
-    tap(action => this.evolutionService.sendStartEvolution({range: action.range})),
+    withLatestFrom(this.store.select(EvolutionSelectors.selectSettings)),
+    tap(([action, settings]: [Action, EvolutionSettings | undefined]) => {
+      if (settings) {
+        this.evolutionService.sendStartEvolution(settings);
+      }
+    }),
     mergeMap(() => concat(
       of(EvolutionActions.evolutionScheduled()),
       this.mapEvolutionMessages(),
@@ -26,7 +31,11 @@ export class EvolutionEffects {
   readonly stopEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.stopEvolution),
     withLatestFrom(this.store.select(EvolutionSelectors.selectEvolutionId)),
-    tap(([action, evolutionId]: [Action, string]) => this.evolutionService.sendStopEvolution({evolutionId})),
+    tap(([action, evolutionId]: [Action, string | undefined]) => {
+      if (evolutionId) {
+        this.evolutionService.sendStopEvolution({evolutionId});
+      }
+    }),
     map(() => EvolutionActions.stoppingEvolution())
   ));
 

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {EvolutionSettings, EvolutionState} from '../store/evolution.state';
+import {EvolutionSettings, EvolutionState} from '../state/evolution.state';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
-import * as EvolutionSelectors from '../store/evolution.selectors';
+import * as EvolutionSelectors from '../state/evolution.selectors';
 import {map} from 'rxjs/operators';
 
 @Injectable({

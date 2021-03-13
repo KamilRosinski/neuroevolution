@@ -4,9 +4,9 @@ import {CommonModule} from '@angular/common';
 import {EvolutionRoutingModule} from './evolution-routing.module';
 import {EvolutionOverviewComponent} from './components/evolution-overview/evolution-overview.component';
 import {StoreModule} from '@ngrx/store';
-import {evolutionReducer} from './store/evolution.reducer';
+import {evolutionReducer} from './state/evolution.reducer';
 import {EffectsModule} from '@ngrx/effects';
-import {EvolutionEffects} from './store/evolution.effects';
+import {EvolutionEffects} from './state/evolution.effects';
 import {CreateEvolutionComponent} from './components/create-evolution/create-evolution.component';
 import {ReactiveFormsModule} from '@angular/forms';
 

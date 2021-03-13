@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {EvolutionSettings, EvolutionState, EvolutionStatus} from '../../store/evolution.state';
+import {EvolutionSettings, EvolutionState, EvolutionStatus} from '../../state/evolution.state';
 import {Observable} from 'rxjs';
-import * as EvolutionSelectors from '../../store/evolution.selectors';
-import * as EvolutionActions from '../../store/evolution.actions';
+import * as EvolutionSelectors from '../../state/evolution.selectors';
+import * as EvolutionActions from '../../state/evolution.actions';
 
 @Component({
   templateUrl: 'evolution-overview.component.html',

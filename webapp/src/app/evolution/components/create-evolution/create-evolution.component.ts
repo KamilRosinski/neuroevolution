@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {EvolutionSettings, EvolutionState} from '../../store/evolution.state';
+import {EvolutionSettings, EvolutionState} from '../../state/evolution.state';
 import {Router} from '@angular/router';
-import * as EvolutionActions from '../../store/evolution.actions';
+import * as EvolutionActions from '../../state/evolution.actions';
 import {noop} from 'rxjs';
 
 @Component({

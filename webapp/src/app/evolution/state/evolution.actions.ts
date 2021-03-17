@@ -9,5 +9,5 @@ export const generationEvaluated = createAction('[evolution] Generation evaluate
 export const stopEvolution = createAction('[evolution] Stop evolution');
 export const stoppingEvolution = createAction('[evolution] Stopping evolution');
 export const evolutionStopped = createAction('[evolution] Evolution stopped');
-export const errorOccurred = createAction('[evolution] Error occurred', props<{message: string}>());
+export const errorOccurred = createAction('[evolution] Error occurred');
 export const resetEvolution = createAction('[evolution] Reset evolution');

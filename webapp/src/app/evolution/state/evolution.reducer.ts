@@ -28,12 +28,12 @@ export function evolutionReducer(s: EvolutionState, action: Action): EvolutionSt
     })),
     on(EvolutionActions.evolutionStopped, (state: EvolutionState) => ({
       ...state,
-      status: EvolutionStatus.STOPPED
+      status: EvolutionStatus.STOPPED,
+      id: undefined
     })),
-    on(EvolutionActions.errorOccurred, (state: EvolutionState, props: {message: string}) => ({
+    on(EvolutionActions.errorOccurred, (state: EvolutionState) => ({
       ...state,
       status: EvolutionStatus.ERROR,
-      errorMessage: props.message
     })),
     on(EvolutionActions.resetEvolution, () => initialState)
   )(s, action);

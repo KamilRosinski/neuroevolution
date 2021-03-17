@@ -3,7 +3,6 @@ export interface EvolutionState {
   settings?: EvolutionSettings;
   status: EvolutionStatus;
   generations: {id: number, score: number}[];
-  errorMessage?: string;
 }
 
 export enum EvolutionStatus {

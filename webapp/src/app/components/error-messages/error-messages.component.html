@@ -1,0 +1,4 @@
+<app-error-message *ngFor="let errorMessage of errorMessages$ | async"
+                   [errorMessage]="errorMessage"
+                   (close)="closeErrorMessage(errorMessage.id)">
+</app-error-message>

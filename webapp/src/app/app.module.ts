@@ -8,16 +8,22 @@ import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
+import {ErrorMessagesComponent} from './components/error-messages/error-messages.component';
+import {ErrorMessageComponent} from './components/error-message/error-message.component';
+import {appReducer} from './state/app.reducer';
+import {AppEffects} from './state/app.effects';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorMessagesComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {
+    StoreModule.forRoot({errorMessages: appReducer}, {
       runtimeChecks: {
         strictActionImmutability: true,
         strictActionSerializability: true,
@@ -25,13 +31,15 @@ import {EffectsModule} from '@ngrx/effects';
         strictStateSerializability: true
       }
     }),
-    EffectsModule.forRoot(),
+    EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Evolution',
       maxAge: 25,
       logOnly: environment.production
     })
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

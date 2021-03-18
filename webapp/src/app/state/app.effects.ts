@@ -1,17 +1,20 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {SequenceGeneratorService} from '../services/sequence-generator.service';
 import * as AppActions from './app.actions';
-import {map} from 'rxjs/operators';
+import {map, withLatestFrom} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {AppState} from './app.state';
+import * as AppSelectors from './app.selectors'
 
 @Injectable()
 export class AppEffects {
 
   readonly createErrorMessage$ = createEffect(() => this.actions$.pipe(
     ofType(AppActions.createErrorMessage),
-    map(action => AppActions.errorMessageCreated({
+    withLatestFrom(this.store.select(AppSelectors.selectMaxId)),
+    map(([action, maxId]) => AppActions.errorMessageCreated({
       errorMessage: {
-        id: this.sequenceGenerator.generate(),
+        id: maxId + 1,
         timestamp: Date.now(),
         message: action.message
       }
@@ -19,7 +22,7 @@ export class AppEffects {
   ));
 
   constructor(private readonly actions$: Actions,
-              private readonly sequenceGenerator: SequenceGeneratorService) {
+              private readonly store: Store<AppState>) {
   }
 
 }

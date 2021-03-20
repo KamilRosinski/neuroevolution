@@ -10,8 +10,8 @@ import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {ErrorMessagesComponent} from './components/error-messages/error-messages.component';
 import {ErrorMessageComponent} from './components/error-message/error-message.component';
-import {appReducer} from './state/app.reducer';
-import {AppEffects} from './state/app.effects';
+import {errorMessageReducer} from './state/error-message.reducer';
+import {ErrorMessageEffects} from './state/error-message.effects';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import {AppEffects} from './state/app.effects';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({errorMessages: appReducer}, {
+    StoreModule.forRoot({errorMessages: errorMessageReducer}, {
       runtimeChecks: {
         strictActionImmutability: true,
         strictActionSerializability: true,
@@ -31,7 +31,7 @@ import {AppEffects} from './state/app.effects';
         strictStateSerializability: true
       }
     }),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([ErrorMessageEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Evolution',
       maxAge: 25,

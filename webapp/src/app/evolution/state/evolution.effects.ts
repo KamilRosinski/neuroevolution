@@ -8,7 +8,7 @@ import {NewGeneration} from '../model/new-generation';
 import {Action, Store} from '@ngrx/store';
 import {EvolutionState} from './evolution.state';
 import * as EvolutionActions from './evolution.actions';
-import * as AppActions from '../../state/app.actions';
+import * as ErrorMessageActions from '../../state/error-message.actions';
 import * as EvolutionSelectors from './evolution.selectors';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class EvolutionEffects {
     ).pipe(
       catchError(error => of(
         EvolutionActions.errorOccurred(),
-        AppActions.createErrorMessage({message: error})
+        ErrorMessageActions.createErrorMessage({message: error})
       ))
     ))
   ));
@@ -39,7 +39,7 @@ export class EvolutionEffects {
     ).pipe(
       catchError(error => of(
         EvolutionActions.errorOccurred(),
-        AppActions.createErrorMessage({message: error})
+        ErrorMessageActions.createErrorMessage({message: error})
       ))
     ))
   ));

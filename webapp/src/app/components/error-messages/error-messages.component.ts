@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {AppState, ErrorMessage} from '../../state/app.state';
+import {ErrorMessageState, ErrorMessage} from '../../state/error-message.state';
 import {Observable, of} from 'rxjs';
-import * as AppSelectors from '../../state/app.selectors';
-import * as AppActions from '../../state/app.actions';
+import * as ErrorMessageSelectors from '../../state/error-message.selectors';
+import * as ErrorMessageActions from '../../state/error-message.actions';
 
 @Component({
   selector: 'app-error-messages',
@@ -12,13 +12,13 @@ import * as AppActions from '../../state/app.actions';
 })
 export class ErrorMessagesComponent {
 
-  readonly errorMessages$: Observable<ErrorMessage[]> = this.store.select(AppSelectors.selectAllErrorMessages);
+  readonly errorMessages$: Observable<ErrorMessage[]> = this.store.select(ErrorMessageSelectors.selectAllErrorMessages);
 
-  constructor(private readonly store: Store<AppState>) {
+  constructor(private readonly store: Store<ErrorMessageState>) {
   }
 
   closeErrorMessage(id: number): void {
-    this.store.dispatch(AppActions.deleteErrorMessage({id}));
+    this.store.dispatch(ErrorMessageActions.deleteErrorMessage({id}));
   }
 
 }

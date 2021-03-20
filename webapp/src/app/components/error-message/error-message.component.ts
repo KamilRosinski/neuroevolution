@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ErrorMessage} from '../../state/app.state';
+import {ErrorMessage} from '../../state/error-message.state';
 
 @Component({
   selector: 'app-error-message',

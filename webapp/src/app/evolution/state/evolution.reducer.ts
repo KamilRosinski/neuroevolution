@@ -1,10 +1,12 @@
 import {createReducer, on} from '@ngrx/store';
-import {EvolutionSettings, EvolutionState, EvolutionStatus, initialState} from './evolution.state';
+import {EvolutionState, EvolutionStatus, initialState} from './evolution.state';
 import * as EvolutionActions from './evolution.actions';
+import {Generation} from '../model/generation';
+import {Settings} from '../model/settings';
 
 export const evolutionReducer = createReducer(
   initialState,
-  on(EvolutionActions.createEvolution, (state: EvolutionState, props: { settings: EvolutionSettings }): EvolutionState => ({
+  on(EvolutionActions.createEvolution, (state: EvolutionState, props: { settings: Settings }): EvolutionState => ({
     ...state,
     settings: props.settings
   })),
@@ -12,13 +14,13 @@ export const evolutionReducer = createReducer(
     ...state,
     status: EvolutionStatus.RUNNING
   })),
-  on(EvolutionActions.generationReceived, (state: EvolutionState, props: { id: number, score: number }): EvolutionState => ({
+  on(EvolutionActions.generationReceived, (state: EvolutionState, props: { generation: Generation }): EvolutionState => ({
     ...state,
-    generations: [...state.generations, props]
+    generations: [...state.generations, props.generation]
   })),
   on(EvolutionActions.evolutionFinished, (state: EvolutionState): EvolutionState => ({
     ...state,
-    status: EvolutionStatus.STOPPED,
+    status: EvolutionStatus.FINISHED,
   })),
   on(EvolutionActions.resetEvolution, () => initialState)
 );

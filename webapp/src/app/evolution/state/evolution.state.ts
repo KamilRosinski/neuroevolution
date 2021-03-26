@@ -1,5 +1,8 @@
+import {Settings} from '../model/settings';
+import {Generation} from '../model/generation';
+
 export interface EvolutionState {
-  settings?: EvolutionSettings;
+  settings?: Settings;
   status: EvolutionStatus;
   generations: Generation[];
 }
@@ -7,17 +10,7 @@ export interface EvolutionState {
 export enum EvolutionStatus {
   NEW = 'NEW',
   RUNNING = 'RUNNING',
-  STOPPED = 'STOPPED',
-  ERROR = 'ERROR'
-}
-
-export interface EvolutionSettings {
-  range: number;
-}
-
-export interface Generation {
-  id: number;
-  score: number;
+  FINISHED = 'FINISHED',
 }
 
 export const initialState: EvolutionState = {

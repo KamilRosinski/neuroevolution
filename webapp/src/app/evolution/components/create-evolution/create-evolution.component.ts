@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {EvolutionSettings, EvolutionState} from '../../state/evolution.state';
 import {Router} from '@angular/router';

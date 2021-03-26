@@ -4,35 +4,21 @@ import * as EvolutionActions from './evolution.actions';
 
 export const evolutionReducer = createReducer(
   initialState,
-  on(EvolutionActions.createEvolution, (state: EvolutionState, props: { settings: EvolutionSettings }) => ({
+  on(EvolutionActions.createEvolution, (state: EvolutionState, props: { settings: EvolutionSettings }): EvolutionState => ({
     ...state,
     settings: props.settings
   })),
-  on(EvolutionActions.evolutionScheduled, (state: EvolutionState) => ({
+  on(EvolutionActions.evolutionStarted, (state: EvolutionState): EvolutionState => ({
     ...state,
-    status: EvolutionStatus.SCHEDULED
-  })),
-  on(EvolutionActions.evolutionStarted, (state: EvolutionState, props: { evolutionId: string }) => ({
-    ...state,
-    id: props.evolutionId,
     status: EvolutionStatus.RUNNING
   })),
-  on(EvolutionActions.generationEvaluated, (state: EvolutionState, props: { id: number, score: number }) => ({
+  on(EvolutionActions.generationReceived, (state: EvolutionState, props: { id: number, score: number }): EvolutionState => ({
     ...state,
     generations: [...state.generations, props]
   })),
-  on(EvolutionActions.stoppingEvolution, (state: EvolutionState) => ({
-    ...state,
-    status: EvolutionStatus.STOPPING
-  })),
-  on(EvolutionActions.evolutionStopped, (state: EvolutionState) => ({
+  on(EvolutionActions.evolutionFinished, (state: EvolutionState): EvolutionState => ({
     ...state,
     status: EvolutionStatus.STOPPED,
-    id: undefined
-  })),
-  on(EvolutionActions.errorOccurred, (state: EvolutionState) => ({
-    ...state,
-    status: EvolutionStatus.ERROR,
   })),
   on(EvolutionActions.resetEvolution, () => initialState)
 );

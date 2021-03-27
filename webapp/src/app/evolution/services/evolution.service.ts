@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {merge, Observable, Subject} from 'rxjs';
 import {WebSocketSubject} from 'rxjs/internal-compatibility';
 import {Generation} from '../model/generation';
-import {EvolutionSettings} from '../state/evolution.state';
 import {webSocket} from 'rxjs/webSocket';
 import {filter, map, take} from 'rxjs/operators';
+import {Settings} from '../model/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class EvolutionService {
     this.errors$
   );
 
-  startEvolution(settings?: EvolutionSettings): void {
+  startEvolution(settings?: Settings): void {
     this.webSocket.next(settings);
   }
 

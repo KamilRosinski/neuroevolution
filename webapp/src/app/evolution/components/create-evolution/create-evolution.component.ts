@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {EvolutionSettings, EvolutionState} from '../../state/evolution.state';
 import {Router} from '@angular/router';
 import * as EvolutionActions from '../../state/evolution.actions';
 import {noop} from 'rxjs';
+import {EvolutionState} from '../../state/evolution.state';
+import {Settings} from '../../model/settings';
 
 @Component({
   templateUrl: 'create-evolution.component.html',
@@ -26,7 +27,7 @@ export class CreateEvolutionComponent {
   }
 
   createEvolution(): void {
-    const settings: EvolutionSettings = {
+    const settings: Settings = {
       range: this.rangeControl.value
     };
     this.store.dispatch(EvolutionActions.createEvolution({settings}));

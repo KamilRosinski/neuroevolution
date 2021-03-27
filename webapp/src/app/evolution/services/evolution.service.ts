@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {merge, Observable, Subject} from 'rxjs';
+import {merge, Observable, Observer, Subject} from 'rxjs';
 import {WebSocketSubject} from 'rxjs/internal-compatibility';
 import {Generation} from '../model/generation';
 import {webSocket} from 'rxjs/webSocket';
@@ -31,12 +31,18 @@ export class EvolutionService {
     this.errors$
   );
 
-  startEvolution(settings?: Settings): void {
-    this.webSocket.next(settings);
+  startEvolution(settings?: Settings): Observable<never> {
+    return new Observable<never>((observer: Observer<never>) => {
+      this.webSocket.next(settings);
+      observer.complete();
+    });
   }
 
-  stopEvolution(): void {
-    this.webSocket.complete();
+  stopEvolution(): Observable<never> {
+    return new Observable<never>((observer: Observer<never>) => {
+      this.webSocket.complete();
+      observer.complete();
+    });
   }
 
 }

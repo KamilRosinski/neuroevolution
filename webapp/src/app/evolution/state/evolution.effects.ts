@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EvolutionService} from '../services/evolution.service';
-import {catchError, exhaustMap, finalize, map, tap, withLatestFrom} from 'rxjs/operators';
+import {catchError, exhaustMap, finalize, first, map, startWith, tap, withLatestFrom} from 'rxjs/operators';
 import {concat, of} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {EvolutionState} from './evolution.state';
@@ -13,13 +13,12 @@ import {Generation} from '../model/generation';
 @Injectable()
 export class EvolutionEffects {
 
-  readonly scheduleEvolution$ = createEffect(() => this.actions$.pipe(
+  readonly startEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.startEvolution),
     withLatestFrom(this.store.select(EvolutionSelectors.selectSettings)),
     exhaustMap(([_, settings]) => concat(
-      of(EvolutionActions.evolutionStarted()).pipe(
-        finalize(() => this.evolutionService.startEvolution(settings))
-      ),
+      this.evolutionService.startEvolution(settings),
+      of(EvolutionActions.evolutionStarted()),
       this.evolutionService.generations$.pipe(
         map((generation: Generation) => EvolutionActions.generationReceived({generation})),
         catchError(error => of(
@@ -32,9 +31,10 @@ export class EvolutionEffects {
 
   readonly stopEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.stopEvolution),
-    tap(() => this.evolutionService.stopEvolution()),
-    map(() => EvolutionActions.evolutionFinished())
-  ));
+    exhaustMap(action => this.evolutionService.stopEvolution())
+  ), {
+    dispatch: false
+  });
 
   constructor(private readonly actions$: Actions,
               private readonly evolutionService: EvolutionService,

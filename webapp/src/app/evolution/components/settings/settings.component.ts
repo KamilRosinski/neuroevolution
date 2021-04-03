@@ -8,10 +8,10 @@ import {EvolutionState} from '../../state/evolution.state';
 import {Settings} from '../../model/settings';
 
 @Component({
-  templateUrl: 'create-evolution.component.html',
-  styleUrls: ['create-evolution.component.scss']
+  templateUrl: 'settings.component.html',
+  styleUrls: ['settings.component.scss']
 })
-export class CreateEvolutionComponent {
+export class SettingsComponent {
 
   readonly form = this.formBuilder.group({
     range: this.formBuilder.control(null, Validators.required)

@@ -8,10 +8,10 @@ import {Generation} from '../../model/generation';
 import {Settings} from '../../model/settings';
 
 @Component({
-  templateUrl: 'evolution-overview.component.html',
-  styleUrls: ['evolution-overview.component.scss']
+  templateUrl: 'overview.component.html',
+  styleUrls: ['overview.component.scss']
 })
-export class EvolutionOverviewComponent {
+export class OverviewComponent {
 
   readonly settings$: Observable<Settings> = this.store.select(EvolutionSelectors.selectSettings);
   readonly status$: Observable<EvolutionStatus> = this.store.select(EvolutionSelectors.selectEvolutionStatus);

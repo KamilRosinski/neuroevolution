@@ -13,19 +13,23 @@ import {Settings} from '../../model/settings';
 })
 export class EvolutionOverviewComponent {
 
-  readonly settings$: Observable<Settings | undefined> = this.store.select(EvolutionSelectors.selectSettings);
+  readonly settings$: Observable<Settings> = this.store.select(EvolutionSelectors.selectSettings);
   readonly status$: Observable<EvolutionStatus> = this.store.select(EvolutionSelectors.selectEvolutionStatus);
   readonly generations$: Observable<Generation[]> = this.store.select(EvolutionSelectors.selectGenerations);
 
   constructor(private readonly store: Store<EvolutionState>) {
   }
 
-  start(): void {
+  onStart(): void {
     this.store.dispatch(EvolutionActions.startEvolution());
   }
 
-  stop(): void {
+  onStop(): void {
     this.store.dispatch(EvolutionActions.stopEvolution());
+  }
+
+  onReset(): void {
+    this.store.dispatch(EvolutionActions.resetEvolution());
   }
 
 }

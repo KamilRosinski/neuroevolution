@@ -22,5 +22,9 @@ export const evolutionReducer = createReducer(
     ...state,
     status: EvolutionStatus.FINISHED,
   })),
-  on(EvolutionActions.resetEvolution, () => initialState)
+  on(EvolutionActions.resetEvolution, (state: EvolutionState): EvolutionState => ({
+    ...state,
+    status: EvolutionStatus.NEW,
+    generations: []
+  }))
 );

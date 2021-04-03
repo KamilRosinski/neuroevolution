@@ -146,7 +146,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      ["app", "evo"],
       "kebab-case"
     ]
   }

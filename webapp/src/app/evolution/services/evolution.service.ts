@@ -31,7 +31,7 @@ export class EvolutionService {
     this.errors$
   );
 
-  startEvolution(settings?: Settings): Observable<never> {
+  startEvolution(settings: Settings): Observable<never> {
     return new Observable<never>((observer: Observer<never>) => {
       this.webSocket.next(settings);
       observer.complete();

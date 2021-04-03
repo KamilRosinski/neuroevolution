@@ -8,10 +8,10 @@ import {ErrorMessage} from '../../state/error-message.state';
 })
 export class ErrorMessageComponent {
 
-  @Input() errorMessage: ErrorMessage | null = null;
+  @Input() errorMessage: ErrorMessage;
   @Output() readonly close: EventEmitter<void> = new EventEmitter<void>();
 
-  closeMessage(): void {
+  onClose(): void {
     this.close.emit();
   }
 

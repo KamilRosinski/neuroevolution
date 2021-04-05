@@ -2,17 +2,19 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {OverviewComponent} from './components/overview/overview.component';
 import {SettingsComponent} from './components/settings/settings.component';
-import {EvolutionOverviewGuard} from './guards/evolution-overview.guard';
+import {OverviewActivateGuard} from './guards/overview-activate.guard';
+import {OverviewDeactivateGuard} from './guards/overview-deactivate.guard';
 
 const routes: Routes = [
   {
-    path: 'new',
+    path: 'settings',
     component: SettingsComponent
   },
   {
     path: 'overview',
     component: OverviewComponent,
-    canActivate: [EvolutionOverviewGuard]
+    canActivate: [OverviewActivateGuard],
+    canDeactivate: [OverviewDeactivateGuard]
   }
 ];
 
@@ -22,6 +24,10 @@ const routes: Routes = [
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
+    OverviewActivateGuard,
+    OverviewDeactivateGuard
   ]
 })
 export class EvolutionRoutingModule {

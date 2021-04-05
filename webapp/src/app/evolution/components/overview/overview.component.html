@@ -1,8 +1,9 @@
 <div>
+  <button (click)="navigateToSettings()">back to settings</button>
   <evo-controls [status]="status$ | async"
-                (start)="onStart()"
-                (stop)="onStop()"
-                (reset)="onReset()"></evo-controls>
+                (start)="startEvolution()"
+                (stop)="stopEvolution()"
+                (reset)="resetEvolution()"></evo-controls>
   <p>range: {{(settings$ | async)?.range}}</p>
   <div>
     <p>generations:</p>

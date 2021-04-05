@@ -3,9 +3,10 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
 import * as EvolutionActions from '../../state/evolution.actions';
-import {noop} from 'rxjs';
+import * as EvolutionSelectors from '../../state/evolution.selectors';
 import {EvolutionState} from '../../state/evolution.state';
 import {Settings} from '../../model/settings';
+import {take} from 'rxjs/operators';
 
 @Component({
   templateUrl: 'settings.component.html',
@@ -24,14 +25,20 @@ export class SettingsComponent {
   constructor(private readonly formBuilder: FormBuilder,
               private readonly store: Store<EvolutionState>,
               private readonly router: Router) {
+
+    this.store.select(EvolutionSelectors.selectSettings).pipe(
+      take(1)
+    ).subscribe((settings: Settings) => {
+      if (settings) {
+        this.form.setValue(settings);
+      }
+    });
   }
 
   createEvolution(): void {
-    const settings: Settings = {
-      range: this.rangeControl.value
-    };
+    const settings: Settings = this.form.value;
     this.store.dispatch(EvolutionActions.createEvolution({settings}));
-    this.router.navigate(['evolution', 'overview']).then(noop);
+    this.router.navigate(['evolution', 'overview']).then();
   }
 
 }

@@ -6,6 +6,7 @@ import * as EvolutionSelectors from '../../state/evolution.selectors';
 import * as EvolutionActions from '../../state/evolution.actions';
 import {Generation} from '../../model/generation';
 import {Settings} from '../../model/settings';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: 'overview.component.html',
@@ -17,19 +18,23 @@ export class OverviewComponent {
   readonly status$: Observable<EvolutionStatus> = this.store.select(EvolutionSelectors.selectEvolutionStatus);
   readonly generations$: Observable<Generation[]> = this.store.select(EvolutionSelectors.selectGenerations);
 
-  constructor(private readonly store: Store<EvolutionState>) {
+  constructor(private readonly store: Store<EvolutionState>,
+              private readonly router: Router) {
   }
 
-  onStart(): void {
+  startEvolution(): void {
     this.store.dispatch(EvolutionActions.startEvolution());
   }
 
-  onStop(): void {
+  stopEvolution(): void {
     this.store.dispatch(EvolutionActions.stopEvolution());
   }
 
-  onReset(): void {
+  resetEvolution(): void {
     this.store.dispatch(EvolutionActions.resetEvolution());
   }
 
+  navigateToSettings(): void {
+    this.router.navigate(['evolution', 'settings']).then();
+  }
 }

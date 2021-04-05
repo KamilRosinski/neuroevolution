@@ -8,6 +8,8 @@ export const evolutionReducer = createReducer(
   initialState,
   on(EvolutionActions.createEvolution, (state: EvolutionState, props: { settings: Settings }): EvolutionState => ({
     ...state,
+    status: EvolutionStatus.NEW,
+    generations: [],
     settings: props.settings
   })),
   on(EvolutionActions.evolutionStarted, (state: EvolutionState): EvolutionState => ({

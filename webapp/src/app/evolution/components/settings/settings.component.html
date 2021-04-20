@@ -1,9 +1,54 @@
-<p>Create new evolution</p>
+<h2>Create new evolution</h2>
 <form [formGroup]="form" (ngSubmit)="createEvolution()">
-  <div>
-    <label for="range-input">Range</label>
-    <input id="range-input" type="number" formControlName="range">
-    <p class="validation-error" *ngIf="(rangeControl.dirty || rangeControl.touched) && rangeControl.errors?.required">This field is required!</p>
-  </div>
-  <button>Create</button>
+  <fieldset id="game-fieldset">
+    <legend>Game</legend>
+    <label>
+      Field width
+      <input [formControl]="fieldWidthControl">
+    </label>
+    <label>
+      Field height
+      <input [formControl]="fieldHeightControl">
+    </label>
+    <label>
+      Endurance
+      <input [formControl]="enduranceControl">
+    </label>
+  </fieldset>
+  <fieldset id="evolution-fieldset">
+    <legend>Evolution</legend>
+    <label>
+      Generation size
+      <input [formControl]="generationSizeControl">
+    </label>
+    <label>
+      Mutation probability
+      <input [formControl]="mutationProbabilityControl">
+    </label>
+    <label>
+      Mutation rate
+      <input [formControl]="mutationRateControl">
+    </label>
+  </fieldset>
+  <fieldset id="neural-network-fieldset">
+    <legend>Neural network layers</legend>
+    <div id="neural-network-inputs">
+      <ng-container *ngFor="let layer of hiddenLayersControl.controls; index as i">
+        <div>Layer {{i + 1}}</div>
+        <label>
+          Number of neurons
+          <input [formControl]="getNumberOfNeurons(layer)">
+        </label>
+        <label>
+          Activation function
+          <select [formControl]="getActivationFunction(layer)">
+            <option *ngFor="let func of activationFunction | keyvalue" [ngValue]="func.key">{{func.value}}</option>
+          </select>
+        </label>
+        <button type="button" (click)="deleteHiddenLayer(i)">delete</button>
+      </ng-container>
+    </div>
+    <button id="add-layer-button" type="button" (click)="addHiddenLayer()">add</button>
+  </fieldset>
+  <button id="submit-button">Create</button>
 </form>

@@ -108,6 +108,7 @@ export class SettingsComponent {
     this.store.dispatch(EvolutionActions.createEvolution({
       settings: this.form.value
     }));
+    this.router.navigate(['evolution', 'overview']);
   }
 
 }

@@ -5,30 +5,30 @@
       <legend>Game</legend>
       <div class="input-group">
         <label for="field-width-input">Field width</label>
-        <input id="field-width-input" [formControl]="fieldWidthControl">
+        <input id="field-width-input" type="number" [formControl]="fieldWidthControl">
       </div>
       <div class="input-group">
         <label for="field-height-input">Field height</label>
-        <input id="field-height-input" [formControl]="fieldHeightControl">
+        <input id="field-height-input" type="number" [formControl]="fieldHeightControl">
       </div>
       <div class="input-group">
         <label for="endurance-input">Endurance</label>
-        <input id="endurance-input" [formControl]="enduranceControl">
+        <input id="endurance-input" type="number" [formControl]="enduranceControl">
       </div>
     </fieldset>
     <fieldset id="fieldset-evolution">
       <legend>Evolution</legend>
       <div class="input-group">
         <label for="generation-size-input">Generation size</label>
-        <input id="generation-size-input" [formControl]="generationSizeControl">
+        <input id="generation-size-input" type="number" [formControl]="generationSizeControl">
       </div>
       <div class="input-group">
         <label for="mutation-probability-input">Mutation probability</label>
-        <input id="mutation-probability-input" [formControl]="mutationProbabilityControl">
+        <input id="mutation-probability-input" type="number" [formControl]="mutationProbabilityControl">
       </div>
       <div class="input-group">
         <label for="mutation-rate-input">Mutation rate</label>
-        <input id="mutation-rate-input" [formControl]="mutationRateControl">
+        <input id="mutation-rate-input" type="number" [formControl]="mutationRateControl">
       </div>
     </fieldset>
     <fieldset id="fieldset-neural-network">
@@ -38,7 +38,7 @@
         <label>Activation function</label>
         <ng-container *ngFor="let layer of hiddenLayersControl.controls; index as i">
           <div class="input-group">
-            <input size="5" [formControl]="getNumberOfNeurons(layer)">
+            <input size="5" type="number" [formControl]="getNumberOfNeurons(layer)">
           </div>
           <div class="input-group">
             <select [formControl]="getActivationFunction(layer)">

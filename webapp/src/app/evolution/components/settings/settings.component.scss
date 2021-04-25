@@ -1,34 +1,45 @@
-form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-#neural-network-fieldset, #submit-button {
-  grid-column: 1/3;
-}
-
-#submit-button {
-  justify-self: end;
-}
-
-#game-fieldset, #evolution-fieldset {
+#fieldsets {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
 
-  label {
-    display: flex;
-    justify-content: space-between;
+  label, legend {
+    white-space: nowrap;
   }
 }
 
-#neural-network-inputs {
+#fieldset-game, #fieldset-evolution {
+  flex: 1 0 0;
+}
+
+#fieldset-neural-network {
+  flex: 2 0 0;
+}
+
+.input-group {
+  input, select {
+    display: block;
+    width: 100%;
+  }
+}
+
+#neural-network-grid {
   display: grid;
-  grid-template-columns: repeat(4, max-content);
-  justify-content: space-between;
-  row-gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(max-content, 1fr)) minmax(70px, max-content);
+  gap: 0.5rem 1rem;
+
+  .input-group:first-of-type {
+    grid-column-start: 1;
+  }
 }
 
 #add-layer-button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+#controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
 }

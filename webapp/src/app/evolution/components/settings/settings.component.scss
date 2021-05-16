@@ -10,6 +10,9 @@
 
 #fieldset-game, #fieldset-evolution {
   flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 #fieldset-neural-network {

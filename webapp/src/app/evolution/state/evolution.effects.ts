@@ -24,17 +24,17 @@ export class EvolutionEffects {
         catchError(error => of(
           ErrorMessageActions.createErrorMessage({message: error.message})
         ))
-      ),
-      of(EvolutionActions.evolutionFinished())
+      )
     ))
   ));
 
   readonly stopEvolution$ = createEffect(() => this.actions$.pipe(
     ofType(EvolutionActions.stopEvolution),
-    exhaustMap(action => this.evolutionService.stopEvolution())
-  ), {
-    dispatch: false
-  });
+    exhaustMap(() => concat(
+      this.evolutionService.stopEvolution(),
+      of(EvolutionActions.evolutionFinished())
+    ))
+  ));
 
   constructor(private readonly actions$: Actions,
               private readonly evolutionService: EvolutionService,

@@ -1,0 +1,15 @@
+/// <reference lib="webworker" />
+
+import {Generation} from '../model/generation';
+import {interval} from 'rxjs';
+import {Settings} from '../model/settings';
+
+addEventListener('message', (event: MessageEvent<Settings>) => {
+  console.log(`starting evolution`, event.data);
+  interval(1000).subscribe((count: number) => {
+    postMessage({
+      id: count,
+      score: Math.floor(Math.random() * 100)
+    } as Generation);
+  });
+});

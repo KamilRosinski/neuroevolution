@@ -1,46 +1,34 @@
 import {Injectable} from '@angular/core';
-import {merge, Observable, Observer, Subject} from 'rxjs';
-import {WebSocketSubject} from 'rxjs/internal-compatibility';
-import {Generation} from '../model/generation';
-import {webSocket} from 'rxjs/webSocket';
-import {filter, map, take} from 'rxjs/operators';
+import {Observable, Observer, Subject} from 'rxjs';
 import {Settings} from '../model/settings';
+import {Generation} from '../model/generation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvolutionService {
 
-  private readonly closeSubject: Subject<CloseEvent> = new Subject<CloseEvent>();
-
-  private readonly webSocket: WebSocketSubject<any> = webSocket({
-    url: `ws://${location.host}/api/evolution`,
-    closeObserver: this.closeSubject
+  private readonly worker: Worker = new Worker('../workers/evolution.worker', {
+    name: 'evolution',
+    type: 'module'
   });
 
-  private readonly errors$: Observable<never> = this.closeSubject.pipe(
-    take(1),
-    filter((closeEvent: CloseEvent) => closeEvent.code !== 1000),
-    map((closeEvent: CloseEvent) => {
-      throw new Error(closeEvent.reason);
-    })
-  );
-
-  readonly generations$: Observable<Generation> = merge(
-    this.webSocket,
-    this.errors$
-  );
+  readonly generations$: Observable<Generation> = new Observable<Generation>((observer: Observer<Generation>) => {
+    this.worker.addEventListener('message', (event: MessageEvent<Generation>) => {
+      observer.next(event.data);
+    });
+  });
 
   startEvolution(settings: Settings): Observable<never> {
     return new Observable<never>((observer: Observer<never>) => {
-      this.webSocket.next(settings);
+      this.worker.postMessage(settings);
       observer.complete();
     });
   }
 
   stopEvolution(): Observable<never> {
     return new Observable<never>((observer: Observer<never>) => {
-      this.webSocket.complete();
+      this.worker.terminate();
       observer.complete();
     });
   }

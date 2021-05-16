@@ -1,5 +1,4 @@
 export interface Settings {
-  range: number;
   game: GameSettings;
   evolution: EvolutionSettings;
   neuralNetwork: NeuralNetworkSettings;

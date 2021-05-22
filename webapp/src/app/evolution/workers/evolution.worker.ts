@@ -5,7 +5,6 @@ import {interval} from 'rxjs';
 import {Settings} from '../model/settings';
 
 addEventListener('message', (event: MessageEvent<Settings>) => {
-  console.log(`starting evolution`, event.data);
   interval(1000).subscribe((count: number) => {
     postMessage({
       id: count,

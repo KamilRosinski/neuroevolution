@@ -1,36 +1,46 @@
 import {Injectable} from '@angular/core';
-import {Observable, Observer, Subject} from 'rxjs';
+import {Observable, Observer, Subject, Subscriber} from 'rxjs';
 import {Settings} from '../model/settings';
 import {Generation} from '../model/generation';
+import {finalize, takeUntil} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvolutionService {
 
-  private readonly worker: Worker = new Worker('../workers/evolution.worker', {
-    name: 'evolution',
-    type: 'module'
-  });
+  private readonly terminationSubject: Subject<void> = new Subject<void>();
+  private worker: Worker = null;
 
-  readonly generations$: Observable<Generation> = new Observable<Generation>((observer: Observer<Generation>) => {
-    this.worker.addEventListener('message', (event: MessageEvent<Generation>) => {
-      observer.next(event.data);
-    });
-  });
-
-  startEvolution(settings: Settings): Observable<never> {
-    return new Observable<never>((observer: Observer<never>) => {
+  startEvolution(settings: Settings): Observable<Generation> {
+    return new Observable<Generation>((observer: Subscriber<Generation>) => {
+      if (!this.worker) {
+        observer.error({
+          message: 'Evolution worker was already created.'
+        });
+      }
+      this.worker = new Worker('../workers/evolution.worker', {
+        name: 'evolution',
+        type: 'module'
+      });
+      this.worker.addEventListener('message', (event: MessageEvent<Generation>) => {
+        observer.next(event.data);
+      });
       this.worker.postMessage(settings);
-      observer.complete();
-    });
+    }).pipe(
+      takeUntil(this.terminationSubject),
+      finalize(() => {
+        if (this.worker) {
+          this.worker.terminate();
+          this.worker = null;
+        }
+      })
+    );
   }
 
-  stopEvolution(): Observable<never> {
-    return new Observable<never>((observer: Observer<never>) => {
-      this.worker.terminate();
-      observer.complete();
-    });
+  stopEvolution(): void {
+    console.log('stop!');
+    this.terminationSubject.next();
   }
 
 }

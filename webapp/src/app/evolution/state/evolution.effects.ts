@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EvolutionService} from '../services/evolution.service';
-import {catchError, exhaustMap, finalize, map, startWith, tap, withLatestFrom} from 'rxjs/operators';
+import {catchError, endWith, exhaustMap, map, startWith, tap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {EvolutionState} from './evolution.state';
@@ -23,7 +23,7 @@ export class EvolutionEffects {
         catchError(error => of(
           ErrorMessageActions.createErrorMessage({message: error.message})
         )),
-        finalize(() => EvolutionActions.evolutionFinished())
+        endWith(EvolutionActions.evolutionFinished())
       )
     )
   ));

@@ -14,7 +14,7 @@ export class EvolutionService {
 
   startEvolution(settings: Settings): Observable<Generation> {
     return new Observable<Generation>((observer: Subscriber<Generation>) => {
-      if (!this.worker) {
+      if (this.worker) {
         observer.error({
           message: 'Evolution worker was already created.'
         });

@@ -1,4 +1,4 @@
 <div class="content" *ngIf="errorMessage">
-  <p>{{errorMessage.timestamp | date: 'HH:mm:ss.SSS'}} | ERROR: {{errorMessage.message}}</p>
+  <p class="error-msg">{{errorMessage.timestamp | date: 'HH:mm:ss.SSS'}} | {{errorMessage.message}}</p>
   <button (click)="onClose()">close</button>
 </div>

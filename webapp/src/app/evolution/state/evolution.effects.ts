@@ -20,7 +20,7 @@ export class EvolutionEffects {
       this.evolutionService.startEvolution(settings).pipe(
         map((generation: Generation) => EvolutionActions.generationReceived({generation})),
         startWith(EvolutionActions.evolutionStarted()),
-        catchError(error => of(
+        catchError((error: ErrorEvent) => of(
           ErrorMessageActions.createErrorMessage({message: error.message})
         )),
         endWith(EvolutionActions.evolutionFinished())

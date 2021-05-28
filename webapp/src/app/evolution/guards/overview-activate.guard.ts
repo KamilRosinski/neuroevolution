@@ -16,7 +16,7 @@ export class OverviewActivateGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this.store.select(EvolutionSelectors.selectSettings).pipe(
-      map((settings: Settings | undefined) => settings ? true : this.router.createUrlTree(['evolution', 'settings']))
+      map((settings: Settings) => settings ? true : this.router.createUrlTree(['evolution', 'settings']))
     );
   }
 

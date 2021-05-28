@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Observer, Subject, Subscriber} from 'rxjs';
+import {Observable, Subject, Subscriber} from 'rxjs';
 import {Settings} from '../model/settings';
 import {Generation} from '../model/generation';
 import {finalize, takeUntil} from 'rxjs/operators';
@@ -25,6 +25,9 @@ export class EvolutionService {
       });
       this.worker.addEventListener('message', (event: MessageEvent<Generation>) => {
         observer.next(event.data);
+      });
+      this.worker.addEventListener('error', (error: ErrorEvent) => {
+        observer.error(error);
       });
       this.worker.postMessage(settings);
     }).pipe(

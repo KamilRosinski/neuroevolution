@@ -5,7 +5,7 @@ import {interval} from 'rxjs';
 import {Settings} from '../model/settings';
 
 addEventListener('message', (event: MessageEvent<Settings>) => {
-  interval(1000).subscribe((count: number) => {
+  interval(200).subscribe((count: number) => {
     postMessage({
       id: count,
       score: Math.floor(Math.random() * 100)

@@ -1,6 +1,5 @@
 import {Matrix} from './matrix';
-
-export type ActivationFunction = (value: number) => number;
+import {ActivationFunction} from '../enums/activation-function';
 
 export interface NeuralNetworkLayer {
   readonly weights: Matrix;

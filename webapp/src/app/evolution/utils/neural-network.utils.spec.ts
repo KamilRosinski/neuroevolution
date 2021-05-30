@@ -1,8 +1,9 @@
 import {Matrix} from '../model/matrix';
 import * as NeuralNetworkUtils from './neural-network.utils';
 import {NeuralNetwork} from '../model/neural-network';
+import {ActivationFunction} from '../enums/activation-function';
 
-describe('neural network utils', () => {
+describe('NeuralNetworkUtils', () => {
   describe('evaluate', () => {
     it('should evaluate neural network output value', () => {
       // given
@@ -19,7 +20,7 @@ describe('neural network utils', () => {
               width: 1,
               elements: [[-2], [1], [3]]
             },
-            activationFunction: (value: number): number => Math.max(0, value)
+            activationFunction: ActivationFunction.RE_LU
           },
           {
             weights: {
@@ -32,7 +33,7 @@ describe('neural network utils', () => {
               width: 1,
               elements: [[3]]
             },
-            activationFunction: (value: number): number => Math.max(0, value)
+            activationFunction: ActivationFunction.RE_LU
           }
         ]
       };

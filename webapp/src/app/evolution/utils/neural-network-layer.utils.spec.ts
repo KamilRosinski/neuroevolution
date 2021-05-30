@@ -1,8 +1,9 @@
 import {NeuralNetworkLayer} from '../model/neural-network-layer';
 import {Matrix} from '../model/matrix';
 import * as NeuralNetworkLayerUtils from './neural-network-layer.utils';
+import {ActivationFunction} from '../enums/activation-function';
 
-describe('neural network layer utils', () => {
+describe('NeuralNetworkLayerUtils', () => {
   describe('evaluate', () => {
     it('should evaluate neural network layer', () => {
       // given
@@ -17,7 +18,7 @@ describe('neural network layer utils', () => {
           width: 1,
           elements: [[2], [1]]
         },
-        activationFunction: (value: number): number => Math.max(0, value)
+        activationFunction: ActivationFunction.RE_LU
       };
       const input: Matrix = {
         height: 3,

@@ -2,7 +2,7 @@ import {Matrix} from '../model/matrix';
 import * as MatrixUtils from './matrix.utils';
 import {ElementModifier, ElementProvider} from './matrix.utils';
 
-describe('matrix utils', () => {
+describe('MatrixUtils', () => {
   describe('create', () => {
     it('should create column vector', () => {
       // given
@@ -92,7 +92,7 @@ describe('matrix utils', () => {
         height: 2,
         width: 2,
         elements: [[0, 0], [0, 0]]
-      }
+      };
 
       // when, then
       expect(() => MatrixUtils.multiply(m1, m2)).toThrowError('Cannot multiply matrices. Dimensions does not match.');

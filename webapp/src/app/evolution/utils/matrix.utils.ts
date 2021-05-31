@@ -1,7 +1,7 @@
 import {Matrix} from '../model/matrix';
 
-export type ElementProvider = (row: number, column: number) => number;
-export type ElementModifier = (element: number) => number;
+export type MatrixElementProvider = (row: number, column: number) => number;
+export type MatrixElementModifier = (element: number) => number;
 
 export const createColumn = (...elements: number[]): Matrix => ({
   height: elements.length,
@@ -9,7 +9,7 @@ export const createColumn = (...elements: number[]): Matrix => ({
   elements: elements.map((element: number): number[] => [element])
 });
 
-export const createFromProvider = (height: number, width: number, elementProvider: ElementProvider): Matrix => {
+export const createFromProvider = (height: number, width: number, elementProvider: MatrixElementProvider): Matrix => {
   const elements: number[][] = [];
   for (let r = 0; r < height; ++r) {
     const row: number[] = [];
@@ -32,7 +32,7 @@ export const scale = (matrix: Matrix, factor: number): Matrix => createFromProvi
   (row: number, column: number): number => matrix.elements[row][column] * factor
 );
 
-export const apply = (matrix: Matrix, elementModifier: ElementModifier): Matrix => createFromProvider(
+export const apply = (matrix: Matrix, elementModifier: MatrixElementModifier): Matrix => createFromProvider(
   matrix.height,
   matrix.width,
   (row: number, column: number): number => elementModifier(matrix.elements[row][column])

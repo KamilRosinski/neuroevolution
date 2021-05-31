@@ -1,6 +1,6 @@
 import {Matrix} from '../model/matrix';
 import * as MatrixUtils from './matrix.utils';
-import {ElementModifier, ElementProvider} from './matrix.utils';
+import {MatrixElementModifier, MatrixElementProvider} from './matrix.utils';
 
 describe('MatrixUtils', () => {
   describe('create', () => {
@@ -21,7 +21,7 @@ describe('MatrixUtils', () => {
 
     it('should create matrix based on provider function', () => {
       // given
-      const elementProvider: ElementProvider = (row: number, column: number): number => row - (2 * column);
+      const elementProvider: MatrixElementProvider = (row: number, column: number): number => row - (2 * column);
 
       // when
       const result: Matrix = MatrixUtils.createFromProvider(3, 2, elementProvider);
@@ -167,7 +167,7 @@ describe('MatrixUtils', () => {
         width: 3,
         elements: [[5, -4, 0], [2, 3, -1]]
       };
-      const elementModifier: ElementModifier = (element: number): number => 2 * element - 3;
+      const elementModifier: MatrixElementModifier = (element: number): number => 2 * element - 3;
 
       // when
       const result: Matrix = MatrixUtils.apply(matrix, elementModifier);

@@ -1,6 +1,6 @@
 import * as ActivationFunctionUtils from './activation-function.utils';
-import {ActivationFunction} from '../model/settings';
-import {MatrixElementModifier} from './matrix.utils';
+import {ActivationFunction} from '../../../model/settings';
+import {MatrixElementModifier} from '../matrix/matrix.utils';
 
 describe('ActivationFunctionUtils', () => {
   describe('sigmoid', () => {

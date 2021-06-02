@@ -1,5 +1,5 @@
-import {Matrix} from './matrix';
-import {ActivationFunction} from '../enums/activation-function';
+import {Matrix} from './matrix/matrix';
+import {ActivationFunction} from './activation-function/activation-function';
 
 export interface NeuralNetworkLayer {
   readonly weights: Matrix;

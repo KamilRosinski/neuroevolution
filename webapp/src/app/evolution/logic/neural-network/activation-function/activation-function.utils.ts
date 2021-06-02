@@ -1,5 +1,5 @@
-import {ActivationFunction} from '../model/settings';
-import {MatrixElementModifier} from './matrix.utils';
+import {ActivationFunction} from '../../../model/settings';
+import {MatrixElementModifier} from '../matrix/matrix.utils';
 
 const sigmoid: MatrixElementModifier = (value: number): number => 1 / (1 + Math.exp(-value));
 const reLu: MatrixElementModifier = (value: number): number => Math.max(0, value);

@@ -1,4 +1,4 @@
-import {Matrix} from '../model/matrix';
+import {Matrix} from './matrix';
 import * as MatrixUtils from './matrix.utils';
 import {MatrixElementModifier, MatrixElementProvider} from './matrix.utils';
 

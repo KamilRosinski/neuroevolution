@@ -1,4 +1,4 @@
-import {Matrix} from '../model/matrix';
+import {Matrix} from './matrix';
 
 export type MatrixElementProvider = (row: number, column: number) => number;
 export type MatrixElementModifier = (element: number) => number;
@@ -29,7 +29,7 @@ export const createFromProvider = (height: number, width: number, elementProvide
 export const scale = (matrix: Matrix, factor: number): Matrix => createFromProvider(
   matrix.height,
   matrix.width,
-  (row: number, column: number): number => matrix.elements[row][column] * factor
+  (row?: number, column?: number): number => matrix.elements[row][column] * factor
 );
 
 export const apply = (matrix: Matrix, elementModifier: MatrixElementModifier): Matrix => createFromProvider(

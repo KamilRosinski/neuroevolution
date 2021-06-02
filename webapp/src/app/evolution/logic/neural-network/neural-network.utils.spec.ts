@@ -1,7 +1,7 @@
-import {Matrix} from '../model/matrix';
+import {Matrix} from './matrix/matrix';
 import * as NeuralNetworkUtils from './neural-network.utils';
-import {NeuralNetwork} from '../model/neural-network';
-import {ActivationFunction} from '../enums/activation-function';
+import {NeuralNetwork} from './neural-network';
+import {ActivationFunction} from './activation-function/activation-function';
 
 describe('NeuralNetworkUtils', () => {
   describe('evaluate', () => {
@@ -31,9 +31,9 @@ describe('NeuralNetworkUtils', () => {
             biases: {
               height: 1,
               width: 1,
-              elements: [[3]]
+              elements: [[-1]]
             },
-            activationFunction: ActivationFunction.RE_LU
+            activationFunction: ActivationFunction.SIGMOID
           }
         ]
       };
@@ -50,7 +50,7 @@ describe('NeuralNetworkUtils', () => {
       expect(result).toEqual({
         height: 1,
         width: 1,
-        elements: [[4]]
+        elements: [[0.5]]
       });
     });
   });

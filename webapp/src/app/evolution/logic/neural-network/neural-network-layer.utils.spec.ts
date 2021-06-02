@@ -1,7 +1,7 @@
-import {NeuralNetworkLayer} from '../model/neural-network-layer';
-import {Matrix} from '../model/matrix';
+import {NeuralNetworkLayer} from './neural-network-layer';
+import {Matrix} from './matrix/matrix';
 import * as NeuralNetworkLayerUtils from './neural-network-layer.utils';
-import {ActivationFunction} from '../enums/activation-function';
+import {ActivationFunction} from './activation-function/activation-function';
 
 describe('NeuralNetworkLayerUtils', () => {
   describe('evaluate', () => {

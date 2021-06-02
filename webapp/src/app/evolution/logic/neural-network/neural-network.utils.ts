@@ -1,6 +1,6 @@
-import {NeuralNetwork} from '../model/neural-network';
-import {Matrix} from '../model/matrix';
-import {NeuralNetworkLayer} from '../model/neural-network-layer';
+import {NeuralNetwork} from './neural-network';
+import {Matrix} from './matrix/matrix';
+import {NeuralNetworkLayer} from './neural-network-layer';
 import * as NeuralNetworkLayerUtils from './neural-network-layer.utils';
 
 export const evaluate = (network: NeuralNetwork, input: Matrix): Matrix =>

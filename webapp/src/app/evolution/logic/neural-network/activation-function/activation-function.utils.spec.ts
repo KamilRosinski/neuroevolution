@@ -1,10 +1,10 @@
 import * as ActivationFunctionUtils from './activation-function.utils';
 import {ActivationFunction} from '../../../model/settings';
-import {MatrixElementModifier} from '../matrix/matrix.utils';
+import {VectorElementModifier} from '../vector/vector';
 
 describe('ActivationFunctionUtils', () => {
   describe('sigmoid', () => {
-    const sigmoidModifier: MatrixElementModifier = ActivationFunctionUtils.getElementModifier(ActivationFunction.SIGMOID);
+    const sigmoidModifier: VectorElementModifier = ActivationFunctionUtils.getActivationFunctionModifier(ActivationFunction.SIGMOID);
 
     it('should return 0.5 for 0 input', () => {
       // given
@@ -19,7 +19,7 @@ describe('ActivationFunctionUtils', () => {
   });
 
   describe('ReLU', () => {
-    const reLuModifier: MatrixElementModifier = ActivationFunctionUtils.getElementModifier(ActivationFunction.RE_LU);
+    const reLuModifier: VectorElementModifier = ActivationFunctionUtils.getActivationFunctionModifier(ActivationFunction.RE_LU);
 
     it('should return 0 for negative input', () => {
       // given

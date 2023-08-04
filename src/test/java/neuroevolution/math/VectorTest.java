@@ -57,30 +57,6 @@ public class VectorTest {
     }
 
     @Test
-    void shouldPositivelyCompareEqualVectors() {
-
-        // given
-        final Vector v1 = new Vector(0, -1, 1.5);
-        final Vector v2 = new Vector(0, -1, 1.5);
-
-        // when, then
-        Assertions.assertThat(v1.hashCode()).isEqualTo(v2.hashCode());
-        Assertions.assertThat(v1.equals(v2)).isTrue();
-    }
-
-    @Test
-    void shouldNegativelyCompareUnequalVectors() {
-
-        // given
-        final Vector v1 = new Vector(0, -1, 1.5);
-        final Vector v2 = new Vector(0, 1.5);
-
-        // when, then
-        Assertions.assertThat(v1.hashCode()).isNotEqualTo(v2.hashCode());
-        Assertions.assertThat(v1.equals(v2)).isFalse();
-    }
-
-    @Test
     void shouldFailTeGetElementAtNegativeIndex() {
 
         // given
@@ -168,6 +144,43 @@ public class VectorTest {
 
         // then
         Assertions.assertThat(result).isEqualTo(new Vector(4, 2.25, 0));
+    }
+
+    @Test
+    void shouldPositivelyCompareEqualVectors() {
+
+        // given
+        final Vector v1 = new Vector(0, -1, 1.5);
+        final Vector v2 = new Vector(0, -1, 1.5);
+
+        // when, then
+        Assertions.assertThat(v1.hashCode()).isEqualTo(v2.hashCode());
+        Assertions.assertThat(v1.equals(v2)).isTrue();
+    }
+
+    @Test
+    void shouldNegativelyCompareUnequalVectors() {
+
+        // given
+        final Vector v1 = new Vector(0, -1, 1.5);
+        final Vector v2 = new Vector(0, 1.5);
+
+        // when, then
+        Assertions.assertThat(v1.hashCode()).isNotEqualTo(v2.hashCode());
+        Assertions.assertThat(v1.equals(v2)).isFalse();
+    }
+
+    @Test
+    void shouldStringifyVector() {
+
+        // given
+        final Vector vector = new Vector(0, 0.45, 1);
+
+        // when
+        final String result = vector.toString();
+
+        // then
+        Assertions.assertThat(result).isEqualTo("[0.0, 0.45, 1.0]");
     }
 
 }

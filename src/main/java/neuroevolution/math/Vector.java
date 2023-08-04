@@ -30,9 +30,9 @@ public class Vector {
     }
 
     public double get(final int index) {
-        if (index < 0 || index >= elements.length) {
+        if (index < 0 || index >= length()) {
             throw new MathException("Vector index out of bound. Index: %s, vector length: %s."
-                    .formatted(Integer.valueOf(index), Integer.valueOf(elements.length)));
+                    .formatted(Integer.valueOf(index), Integer.valueOf(length())));
         }
 
         return elements[index];
@@ -43,7 +43,7 @@ public class Vector {
     }
 
     public Vector apply(final DoubleUnaryOperator function) {
-        return new Vector(elements.length, i -> function.applyAsDouble(elements[i]));
+        return new Vector(length(), i -> function.applyAsDouble(get(i)));
     }
 
     @Override

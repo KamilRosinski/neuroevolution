@@ -128,6 +128,35 @@ public class VectorTest {
     }
 
     @Test
+    void shouldAddVectors() {
+
+        // given
+        final Vector v1 = new Vector(0, 1, -1.5);
+        final Vector v2 = new Vector(2.5, -1, 1);
+
+        // when
+        final Vector result = v1.add(v2);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(new Vector(2.5, 0, -0.5));
+    }
+
+    @Test
+    void shouldFailToAddVectorsOfDifferentLengths() {
+
+        // given
+        final Vector v1 = new Vector(0, 1);
+        final Vector v2 = new Vector(2);
+
+        // then
+        Assertions.assertThatThrownBy(() -> {
+                // when
+                v1.add(v2);
+            }).isInstanceOf(MathException.class)
+            .hasMessage("Cannot add vectors. Unequal lengths: 2 and 1.");
+    }
+
+    @Test
     void shouldApplyFunctionOnVectorElements() {
 
         // given

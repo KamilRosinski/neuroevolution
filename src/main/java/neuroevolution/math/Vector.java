@@ -42,6 +42,15 @@ public class Vector {
         return Arrays.stream(elements);
     }
 
+    public Vector add(final Vector other) {
+        if (length() != other.length()) {
+            throw new MathException("Cannot add vectors. Unequal lengths: %d and %d."
+                .formatted(Integer.valueOf(length()), Integer.valueOf(other.length())));
+        }
+
+        return new Vector(length(), i -> get(i) + other.get(i));
+    }
+
     public Vector apply(final DoubleUnaryOperator function) {
         return new Vector(length(), i -> function.applyAsDouble(get(i)));
     }

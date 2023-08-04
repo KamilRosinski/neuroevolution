@@ -32,4 +32,26 @@ public class ActivationFunctionTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("generateReLuTestData")
+    void shouldApplyReLuFunction(final double x, final double expected) {
+
+        // given
+        final ActivationFunction activationFunction = ActivationFunction.RE_LU;
+
+        // when
+        final double result = activationFunction.apply(x);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> generateReLuTestData() {
+        return Stream.of(
+              Arguments.of(Double.valueOf(-3), Double.valueOf(0)),
+              Arguments.of(Double.valueOf(0), Double.valueOf(0)),
+              Arguments.of(Double.valueOf(2.5), Double.valueOf(2.5))
+        );
+    }
+
 }

@@ -18,7 +18,7 @@ public class ActivationFunctionTest {
         final ActivationFunction activationFunction = ActivationFunction.SIGMOID;
 
         // when
-        final double result = activationFunction.apply(x);
+        final double result = activationFunction.getFunction().applyAsDouble(x);
 
         // then
         Assertions.assertThat(result).isEqualTo(expected);
@@ -40,7 +40,7 @@ public class ActivationFunctionTest {
         final ActivationFunction activationFunction = ActivationFunction.RE_LU;
 
         // when
-        final double result = activationFunction.apply(x);
+        final double result = activationFunction.getFunction().applyAsDouble(x);
 
         // then
         Assertions.assertThat(result).isEqualTo(expected);

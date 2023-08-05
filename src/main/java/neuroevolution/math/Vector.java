@@ -13,7 +13,7 @@ public class Vector {
         this.elements = elements;
     }
 
-    public Vector(final int length, final IntToDoubleFunction supplier) {
+    public Vector(final int length, final IntToDoubleFunction elementProvider) {
         if (length < 0) {
             throw new MathException("Cannot create vector. Invalid length: %d."
                     .formatted(Integer.valueOf(length)));
@@ -21,7 +21,7 @@ public class Vector {
 
         elements = new double[length];
         for (int index = 0; index < length; ++index) {
-            elements[index] = supplier.applyAsDouble(index);
+            elements[index] = elementProvider.applyAsDouble(index);
         }
     }
 
@@ -31,7 +31,7 @@ public class Vector {
 
     public double get(final int index) {
         if (index < 0 || index >= length()) {
-            throw new MathException("Vector index out of bound. Index: %s, vector length: %s."
+            throw new MathException("Vector index out of bound. Index: %d, vector length: %d."
                     .formatted(Integer.valueOf(index), Integer.valueOf(length())));
         }
 

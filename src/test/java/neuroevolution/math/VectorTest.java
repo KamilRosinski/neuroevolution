@@ -26,7 +26,7 @@ public class VectorTest {
     }
 
     @Test
-    void shouldCreateVectorFromProvider() {
+    void shouldCreateVectorFromElementProvider() {
 
         // given
         final int length = 3;
@@ -153,9 +153,12 @@ public class VectorTest {
         final Vector v1 = new Vector(0, -1, 1.5);
         final Vector v2 = new Vector(0, -1, 1.5);
 
-        // when, then
+        // when
+        final boolean result = v1.equals(v2);
+
+        // then
         Assertions.assertThat(v1.hashCode()).isEqualTo(v2.hashCode());
-        Assertions.assertThat(v1.equals(v2)).isTrue();
+        Assertions.assertThat(result).isTrue();
     }
 
     @Test
@@ -165,9 +168,12 @@ public class VectorTest {
         final Vector v1 = new Vector(0, -1, 1.5);
         final Vector v2 = new Vector(0, 1.5);
 
-        // when, then
+        // when
+        final boolean result = v1.equals(v2);
+
+        // then
         Assertions.assertThat(v1.hashCode()).isNotEqualTo(v2.hashCode());
-        Assertions.assertThat(v1.equals(v2)).isFalse();
+        Assertions.assertThat(result).isFalse();
     }
 
     @Test

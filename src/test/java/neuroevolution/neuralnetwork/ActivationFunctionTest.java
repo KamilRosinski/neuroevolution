@@ -1,6 +1,5 @@
-package neuroevolution.neuroevolution;
+package neuroevolution.neuralnetwork;
 
-import neuroevolution.neuralnetwork.ActivationFunction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

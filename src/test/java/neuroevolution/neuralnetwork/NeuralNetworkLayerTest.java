@@ -28,8 +28,8 @@ public class NeuralNetworkLayerTest {
 
         // given
         final NeuralNetworkLayer layer = new NeuralNetworkLayer(
-            new Matrix(new double[]{0, Math.PI}, new double[]{1, -0.5}, new double[]{-2, 2}),
-            new Vector(0, -0.5, 1),
+            new Matrix(new double[]{1, -0.5}, new double[]{0, Math.PI}, new double[]{-2, 2}),
+            new Vector(-0.5, 0, 1),
             ActivationFunction.RE_LU
         );
 
@@ -39,7 +39,7 @@ public class NeuralNetworkLayerTest {
         final Vector result = layer.evaluate(input);
 
         // then
-        Assertions.assertThat(result).isEqualTo(new Vector(Math.PI, 1, 0));
+        Assertions.assertThat(result).isEqualTo(new Vector( 1, Math.PI, 0));
     }
 
     @Test

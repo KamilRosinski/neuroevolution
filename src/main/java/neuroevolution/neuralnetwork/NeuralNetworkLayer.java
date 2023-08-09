@@ -29,4 +29,12 @@ public class NeuralNetworkLayer {
         return weights.multiply(input).add(biases).apply(activationFunction.getFunction());
     }
 
+    public int getInputLength() {
+        return weights.width();
+    }
+
+    public int getOutputLength() {
+        return weights.height();
+    }
+
 }

@@ -8,6 +8,22 @@ import org.junit.jupiter.api.Test;
 public class NeuralNetworkLayerTest {
 
     @Test
+    void shouldCreateNeuralNetworkLayer() {
+
+        // given
+        final Matrix weights = new Matrix(new double[] {1, 2, 3}, new double[]{4, 5, 6});
+        final Vector biases = new Vector(7, 8);
+        final ActivationFunction activationFunction = ActivationFunction.RE_LU;
+
+        // when
+        final NeuralNetworkLayer result = new NeuralNetworkLayer(weights, biases, activationFunction);
+
+        // then
+        Assertions.assertThat(result.getInputLength()).isEqualTo(3);
+        Assertions.assertThat(result.getOutputLength()).isEqualTo(2);
+    }
+
+    @Test
     void shouldFailToCreateNeuralNetworkLayerWhenDimensionsDoesNotMatch() {
 
         // given

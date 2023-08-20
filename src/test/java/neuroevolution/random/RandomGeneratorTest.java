@@ -3,11 +3,8 @@ package neuroevolution.random;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -100,7 +97,7 @@ public class RandomGeneratorTest {
             .hasMessage(errorMessage);
     }
 
-    public static Stream<Arguments> generateInvalidProbabilityTestData() {
+    private static Stream<Arguments> generateInvalidProbabilityTestData() {
         return Stream.of(
             Arguments.of(Double.valueOf(-0.2), "Cannot generate true value. Invalid probability: -0.2."),
             Arguments.of(Double.valueOf(1.5), "Cannot generate true value. Invalid probability: 1.5.")

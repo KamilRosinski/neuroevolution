@@ -65,10 +65,9 @@ public class Vector {
         if (this == other) {
             return true;
         }
-        if (other == null || getClass() != other.getClass()) {
+        if (!(other instanceof Vector vector)) {
             return false;
         }
-        final Vector vector = (Vector) other;
         return Arrays.equals(elements, vector.elements);
     }
 

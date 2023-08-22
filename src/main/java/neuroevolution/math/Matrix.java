@@ -7,12 +7,14 @@ public class Matrix {
     private final double[][] elements;
 
     public Matrix(final double[]... elements) {
-        final int firstRowLength = elements[0].length;
-        for (int row = 1; row < elements.length; ++row) {
-            final int currentRowLength = elements[row].length;
-            if (currentRowLength != firstRowLength) {
-                throw new MathException("Cannot create matrix. Rows have different lengths: %d and %d."
-                    .formatted(Integer.valueOf(firstRowLength), Integer.valueOf(currentRowLength)));
+        if (elements.length > 0) {
+            final int firstRowLength = elements[0].length;
+            for (int row = 1; row < elements.length; ++row) {
+                final int currentRowLength = elements[row].length;
+                if (currentRowLength != firstRowLength) {
+                    throw new MathException("Cannot create matrix. Rows have different lengths: %d and %d."
+                        .formatted(Integer.valueOf(firstRowLength), Integer.valueOf(currentRowLength)));
+                }
             }
         }
 
@@ -79,14 +81,13 @@ public class Matrix {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         }
-        if (other == null || getClass() != other.getClass()) {
+        if (!(other instanceof Matrix matrix)) {
             return false;
         }
-        final Matrix matrix = (Matrix) other;
         return Arrays.deepEquals(elements, matrix.elements);
     }
 

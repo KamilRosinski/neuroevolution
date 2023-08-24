@@ -87,12 +87,12 @@ public class RandomGeneratorTest {
 
     @ParameterizedTest
     @MethodSource("generateInvalidProbabilityTestData")
-    void shouldFailToGenerateTrueValueForInvalidProbability(final double probability, final String errorMessage) {
+    void shouldFailToGenerateTrueValueForInvalidProbability(final double trueProbability, final String errorMessage) {
 
         // then
         Assertions.assertThatThrownBy(() -> {
                 // when
-                randomGenerator.generateTrue(probability);
+                randomGenerator.generateBoolean(trueProbability);
             }).isInstanceOf(RandomException.class)
             .hasMessage(errorMessage);
     }
@@ -105,8 +105,8 @@ public class RandomGeneratorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateTrueProbabilityTestData")
-    void shouldGenerateTrueValueWithGivenProbability(final double uniformValue, final double probability,
+    @MethodSource("generateBooleanProbabilityTestData")
+    void shouldGenerateTrueValueWithGivenProbability(final double uniformValue, final double trueProbability,
                                                      final boolean expectedResult) {
 
         // given
@@ -114,13 +114,13 @@ public class RandomGeneratorTest {
             .thenReturn(Double.valueOf(uniformValue));
 
         // when
-        final boolean result = randomGenerator.generateTrue(probability);
+        final boolean result = randomGenerator.generateBoolean(trueProbability);
 
         // then
         Assertions.assertThat(result).isEqualTo(expectedResult);
     }
 
-    private static Stream<Arguments> generateTrueProbabilityTestData() {
+    private static Stream<Arguments> generateBooleanProbabilityTestData() {
         return Stream.of(
             Arguments.of(Double.valueOf(0), Double.valueOf(0.2), Boolean.valueOf(true)),
             Arguments.of(Double.valueOf(0.2), Double.valueOf(0.2), Boolean.valueOf(false)),

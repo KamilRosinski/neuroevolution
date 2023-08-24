@@ -28,13 +28,13 @@ public class RandomGenerator {
         return random.nextGaussian(mean, standardDeviation);
     }
 
-    public boolean generateTrue(final double probability) {
-        if (probability < 0 || probability > 1) {
+    public boolean generateBoolean(final double trueProbability) {
+        if (trueProbability < 0 || trueProbability > 1) {
             throw new RandomException("Cannot generate true value. Invalid probability: %s."
-                .formatted(Double.valueOf(probability)));
+                .formatted(Double.valueOf(trueProbability)));
         }
 
-        return generateUniform(0, 1) < probability;
+        return generateUniform(0, 1) < trueProbability;
     }
 
 }

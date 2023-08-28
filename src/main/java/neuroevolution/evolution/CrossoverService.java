@@ -10,33 +10,33 @@ public class CrossoverService {
         this.randomGenerator = randomGenerator;
     }
 
-    public Organism crossOver(final Organism... parents) {
+    public Genotype crossOver(final Genotype... parents) {
         validateInput(parents);
-        final double[] resultGenotype = new double[parents[0].genotype().length];
+        final double[] resultGenotype = new double[parents[0].genes().length];
 
         for (int geneIndex = 0; geneIndex < resultGenotype.length; ++geneIndex) {
             final double[] possibleGenes = new double[parents.length];
             for (int parentIndex = 0; parentIndex < possibleGenes.length; ++parentIndex) {
-                final Organism parent = parents[parentIndex];
-                possibleGenes[parentIndex] = parent.genotype()[geneIndex];
+                final Genotype parent = parents[parentIndex];
+                possibleGenes[parentIndex] = parent.genes()[geneIndex];
             }
             final int randomGeneIndex = (int) randomGenerator.generateUniform(0, possibleGenes.length);
             resultGenotype[geneIndex] = possibleGenes[randomGeneIndex];
         }
         
-        return new Organism(resultGenotype);
+        return new Genotype(resultGenotype);
     }
 
-    private static void validateInput(Organism... parents) {
+    private static void validateInput(Genotype... parents) {
         if (parents.length == 0) {
-            throw new EvolutionException("Cannot cross over organisms. Parents array must not be empty.");
+            throw new EvolutionException("Cannot cross over genotypes. Parents array must not be empty.");
         }
 
-        final int firstParentLength = parents[0].genotype().length;
+        final int firstParentLength = parents[0].genes().length;
         for (int i = 1; i < parents.length; ++i) {
-            final int currentParentLength = parents[i].genotype().length;
+            final int currentParentLength = parents[i].genes().length;
             if (currentParentLength != firstParentLength) {
-                throw new EvolutionException("Cannot cross over organisms. Parent genotypes have different lengths: %d and %d."
+                throw new EvolutionException("Cannot cross over genotypes. Parent genotypes have different lengths: %d and %d."
                     .formatted(Integer.valueOf(firstParentLength), Integer.valueOf(currentParentLength)));
             }
         }

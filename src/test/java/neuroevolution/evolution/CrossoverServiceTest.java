@@ -19,31 +19,31 @@ public class CrossoverServiceTest {
     private CrossoverService crossoverService;
 
     @Test
-    void shouldCreateChildOrganism() {
+    void shouldCreateChildGenotype() {
 
         // given
-        final Organism[] parents = {
-            new Organism(1, 1, 2, 3),
-            new Organism(5, 8, 13, 21)
+        final Genotype[] parents = {
+            new Genotype(1, 1, 2, 3),
+            new Genotype(5, 8, 13, 21)
         };
 
         Mockito.when(Double.valueOf(randomGenerator.generateUniform(0, 2)))
             .thenReturn(Double.valueOf(1.5), Double.valueOf(0), Double.valueOf(0.9), Double.valueOf(1));
 
         // when
-        final Organism result = crossoverService.crossOver(parents);
+        final Genotype result = crossoverService.crossOver(parents);
 
         // then
-        Assertions.assertThat(result).isEqualTo(new Organism(5, 1, 2, 21));
+        Assertions.assertThat(result).isEqualTo(new Genotype(5, 1, 2, 21));
     }
 
     @Test
-    void shouldFailToCreateChildOrganismWhenParentGenotypeLengthsDoesNotMatch() {
+    void shouldFailToCreateChildGenotypeWhenParentGenotypeLengthsDoesNotMatch() {
 
         // given
-        final Organism[] parents = {
-            new Organism(0, 0),
-            new Organism(0, 0, 0)
+        final Genotype[] parents = {
+            new Genotype(0, 0),
+            new Genotype(0, 0, 0)
         };
 
         // then
@@ -51,21 +51,21 @@ public class CrossoverServiceTest {
                 // when
                 crossoverService.crossOver(parents);
             }).isInstanceOf(EvolutionException.class)
-            .hasMessage("Cannot cross over organisms. Parent genotypes have different lengths: 2 and 3.");
+            .hasMessage("Cannot cross over genotypes. Parent genotypes have different lengths: 2 and 3.");
     }
 
     @Test
-    void shouldFailToCreateChildOrganismWhenParentsArrayIsEmpty() {
+    void shouldFailToCreateChildGenotypeWhenParentsArrayIsEmpty() {
 
         // given
-        final Organism[] parents = {};
+        final Genotype[] parents = {};
 
         // then
         Assertions.assertThatThrownBy(() -> {
                 // when
                 crossoverService.crossOver(parents);
             }).isInstanceOf(EvolutionException.class)
-            .hasMessage("Cannot cross over organisms. Parents array must not be empty.");
+            .hasMessage("Cannot cross over genotypes. Parents array must not be empty.");
     }
 
 }

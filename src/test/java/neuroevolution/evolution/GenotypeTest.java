@@ -3,14 +3,14 @@ package neuroevolution.evolution;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class OrganismTest {
+public class GenotypeTest {
 
     @Test
-    void shouldPositivelyCompareEqualOrganisms() {
+    void shouldPositivelyCompareEqualGenotypes() {
 
         // given
-        final Organism o1 = new Organism(1, 2, 3);
-        final Organism o2 = new Organism(1, 2, 3);
+        final Genotype o1 = new Genotype(1, 2, 3);
+        final Genotype o2 = new Genotype(1, 2, 3);
 
         // when
         final boolean result = o1.equals(o2);
@@ -21,11 +21,11 @@ public class OrganismTest {
     }
 
     @Test
-    void shouldNegativelyCompareUnequalOrganisms() {
+    void shouldNegativelyCompareUnequalGenotypes() {
 
         // given
-        final Organism o1 = new Organism(1, 2, 3);
-        final Organism o2 = new Organism(3, 2, 1);
+        final Genotype o1 = new Genotype(1, 2, 3);
+        final Genotype o2 = new Genotype(3, 2, 1);
 
         // when
         final boolean result = o1.equals(o2);
@@ -36,13 +36,13 @@ public class OrganismTest {
     }
 
     @Test
-    void shouldStringifyOrganism() {
+    void shouldStringifyGenotype() {
 
         // given
-        final Organism organism = new Organism(0, -0.5, 2);
+        final Genotype genotype = new Genotype(0, -0.5, 2);
 
         // when
-        final String result = organism.toString();
+        final String result = genotype.toString();
 
         // then
         Assertions.assertThat(result).isEqualTo("[0.0, -0.5, 2.0]");

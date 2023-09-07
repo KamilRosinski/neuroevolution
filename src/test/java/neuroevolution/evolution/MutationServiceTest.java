@@ -74,11 +74,11 @@ public class MutationServiceTest {
         final double mutationProbability = 0.2;
         final double mutationRate = 0.1;
 
-        Mockito.when(Boolean.valueOf(randomGenerator.generateBoolean(mutationProbability)))
-            .thenReturn(Boolean.FALSE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, Boolean.FALSE);
+        Mockito.when(randomGenerator.generateDouble())
+            .thenReturn(0.3, 0.0, 0.5, 0.9, 0.1, 0.7);
 
-        Mockito.when(Double.valueOf(randomGenerator.generateGaussian(0, mutationRate)))
-            .thenReturn(Double.valueOf(-0.2), Double.valueOf(0.5));
+        Mockito.when(randomGenerator.generateGaussian(0, mutationRate))
+            .thenReturn(-0.2, 0.5);
 
         // when
         final Genotype result = mutationService.mutate(genotype, mutationProbability, mutationRate);

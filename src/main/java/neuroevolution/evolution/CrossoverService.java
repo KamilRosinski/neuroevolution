@@ -20,7 +20,7 @@ public class CrossoverService {
                 final Genotype parent = parents[parentIndex];
                 possibleGenes[parentIndex] = parent.genes()[geneIndex];
             }
-            final int randomGeneIndex = (int) randomGenerator.generateUniform(0, possibleGenes.length);
+            final int randomGeneIndex = randomGenerator.generateInt(possibleGenes.length);
             resultGenotype[geneIndex] = possibleGenes[randomGeneIndex];
         }
         

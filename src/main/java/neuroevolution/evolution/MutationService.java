@@ -23,14 +23,16 @@ public class MutationService {
 
         final Genotype result = new Genotype(new double[genotype.genes().length]);
         for (int geneIndex = 0; geneIndex < result.genes().length; ++geneIndex) {
-            final double mutationValue = randomGenerator.generateBoolean(mutationProbability)
-                ? randomGenerator.generateGaussian(0, mutationRate)
-                : 0;
-
-            result.genes()[geneIndex] = genotype.genes()[geneIndex] + mutationValue;
+            result.genes()[geneIndex] = genotype.genes()[geneIndex] + generateMutation(mutationProbability, mutationRate);
         }
 
         return result;
+    }
+
+    private double generateMutation(final double mutationProbability, final double mutationRate) {
+        return randomGenerator.generateDouble() < mutationProbability
+            ? randomGenerator.generateGaussian(0, mutationRate)
+            : 0;
     }
 
 }

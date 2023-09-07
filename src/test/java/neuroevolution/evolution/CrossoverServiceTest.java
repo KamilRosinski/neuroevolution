@@ -27,8 +27,7 @@ public class CrossoverServiceTest {
             new Genotype(5, 8, 13, 21)
         };
 
-        Mockito.when(Double.valueOf(randomGenerator.generateUniform(0, 2)))
-            .thenReturn(Double.valueOf(1.5), Double.valueOf(0), Double.valueOf(0.9), Double.valueOf(1));
+        Mockito.when(randomGenerator.generateInt(2)).thenReturn(1, 0, 0, 1);
 
         // when
         final Genotype result = crossoverService.crossOver(parents);

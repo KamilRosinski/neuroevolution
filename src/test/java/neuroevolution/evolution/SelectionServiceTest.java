@@ -7,12 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Or;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,8 +33,8 @@ public class SelectionServiceTest {
         parents.add(parent2);
         parents.add(parent3);
 
-        Mockito.when(Double.valueOf(randomGenerator.generateUniform(0, 4))).thenReturn(Double.valueOf(2));
-        Mockito.when(Double.valueOf(randomGenerator.generateUniform(0, 2))).thenReturn(Double.valueOf(0.5));
+        Mockito.when(randomGenerator.generateInt(4)).thenReturn(2);
+        Mockito.when(randomGenerator.generateInt(2)).thenReturn(0);
 
         // 1: [0, 1), 2: [1, 2), 4: [2, 4)
         // 1: [0, 1), 3: [1, 3)

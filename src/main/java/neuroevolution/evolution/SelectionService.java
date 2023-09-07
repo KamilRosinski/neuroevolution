@@ -51,7 +51,7 @@ public class SelectionService {
             cumulativeFitness.put(organism, Integer.valueOf(cumulativeProbability));
         }
 
-        final int random = (int) randomGenerator.generateUniform(0, cumulativeProbability);
+        final int random = randomGenerator.generateInt(cumulativeProbability);
 
         for (final Map.Entry<Organism, Integer> entry : cumulativeFitness.entrySet()) {
             if (entry.getValue().intValue() > random) {

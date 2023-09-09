@@ -10,6 +10,20 @@ import java.util.stream.Stream;
 
 public class LinearCongruentialGeneratorTest {
 
+    @Test
+    void shouldInitialize() {
+
+        // given
+        final long seed = 42;
+        final RandomSource randomSource = new LinearCongruentialGenerator(seed);
+
+        // when
+        final long result = randomSource.getSeed();
+
+        // then
+        Assertions.assertThat(result).isEqualTo(seed);
+    }
+
     @ParameterizedTest
     @MethodSource("generateRandomBitsTestData")
     void shouldGenerateRandomBits(final long initialSeed, final int numberOfBits, final int expectedResult,

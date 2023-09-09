@@ -12,13 +12,25 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class RandomGeneratorTest {
 
     @Mock
-    private LinearCongruentialGenerator randomBitsGenerator;
+    private LinearCongruentialGenerator randomSource;
 
     @InjectMocks
     private RandomGenerator randomGenerator;
 
-    // TODO: generate double
-    // TODO: get seed
+    @Test
+    void shouldReturnSeed() {
+
+        // given
+        final long seed = 42;
+
+        Mockito.when(randomSource.getSeed()).thenReturn(seed);
+
+        // when
+        final long result = randomGenerator.getSeed();
+
+        // then
+        Assertions.assertThat(result).isEqualTo(seed);
+    }
 
     @Test
     void shouldGenerateUniform() {
@@ -26,7 +38,7 @@ public class RandomGeneratorTest {
         // given
         final int upperBound = 3;
 
-        Mockito.when(randomBitsGenerator.nextBits(31)).thenReturn(7);
+        Mockito.when(randomSource.nextBits(31)).thenReturn(7);
 
         // when
         final double result = randomGenerator.generateInt(upperBound);
@@ -50,18 +62,33 @@ public class RandomGeneratorTest {
     }
 
     @Test
+    void shouldGenerateDouble() {
+
+        // given
+        Mockito.when(randomSource.nextBits(26)).thenReturn(0b00000011001010100111100100101001);
+        Mockito.when(randomSource.nextBits(27)).thenReturn(0b00000101010101111010010100100000);
+
+        // when
+        final double result = randomGenerator.generateDouble();
+
+        // then
+        final double expected = (double) 0b0000000000011001010100111100100101001101010101111010010100100000L / (1L << 53);
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     void shouldGenerateGaussianPair() {
 
         // given
         final double mean = 1;
         final double standardDeviation = 0.5;
 
-        Mockito.when(randomBitsGenerator.nextBits(26)).thenReturn(
+        Mockito.when(randomSource.nextBits(26)).thenReturn(
             0b01010010010101011000101011,
             0b00000000000000000000000000,
             0b11011000101000001101011111
         );
-        Mockito.when(randomBitsGenerator.nextBits(27)).thenReturn(
+        Mockito.when(randomSource.nextBits(27)).thenReturn(
             0b101010010101010101010010101,
             0b000000000000000000000000000,
             0b010011110101000110100001101
